@@ -92,7 +92,7 @@
             $_.RelativeCount = $_.Count / $OverallCount
         }
 
-        $Buckets
+        [HistogramBucket[]]$Buckets
     }
 }
 
