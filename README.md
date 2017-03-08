@@ -13,7 +13,6 @@ Statistical analysis
   . https://en.m.wikipedia.org/wiki/Percentile
   . https://en.m.wikipedia.org/wiki/Confidence_interval
   . https://en.wikipedia.org/wiki/Histogram
-- Code coverage (`Invoke-Pester -Script "$PSScriptRoot\Statistics\Statistics.Tests.ps1" -CodeCoverage "$PSScriptRoot\Statistics\Statistics.psm1"`)
 
 ## Get-Histogram
 
