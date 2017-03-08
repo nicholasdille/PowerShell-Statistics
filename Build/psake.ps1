@@ -56,6 +56,12 @@ Task Test -Depends Init  {
     "`n"
 }
 
+Task Docs -Depends Test {
+    $lines
+
+    New-ExternalHelp -Path $ProjectRoot\docs -OutputPath $env:BHPSModulePath\en-US
+}
+
 Task Build -Depends Test {
     $lines
     
