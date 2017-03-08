@@ -1,0 +1,10 @@
+environment:
+  my_variable:
+    secure: EaMePsm8eU/bUd1Ej83dTOAaGja/ht/3IrKC84nbZ9+dQbjeDfbTHk7nM+wp9DgE
+
+os: WMF 5
+
+build: false
+
+test_script:
+- ps: . .\build\Start-Build.ps1 #-Task Deploy

@@ -1,0 +1,424 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<helpItems xmlns="http://msh" schema="maml">
+
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Add-Bar</command:name>
+<command:verb>Add</command:verb>
+<command:noun>Bar</command:noun>
+<maml:description><maml:para>Visualizes values using bars
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>A graphical representation help understanding data. Add-Bar adds a new member to the input objects which contain bars to visualize the size of the value relative to the maximum value
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Add-Bar</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none"><maml:name>InputObject</maml:name>
+<maml:Description><maml:para>Input objects containing the relevant data
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Array</command:parameterValue>
+<dev:type><maml:name>Array</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>Property</maml:name>
+<maml:Description><maml:para>Property of the input objects containing the relevant data
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>Width</maml:name>
+<maml:Description><maml:para>Length of the bar for the maximum value (width of the graph)
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>50</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none"><maml:name>InputObject</maml:name>
+<maml:Description><maml:para>Input objects containing the relevant data
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Array</command:parameterValue>
+<dev:type><maml:name>Array</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>Property</maml:name>
+<maml:Description><maml:para>Property of the input objects containing the relevant data
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>Width</maml:name>
+<maml:Description><maml:para>Length of the bar for the maximum value (width of the graph)
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>50</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes></command:inputTypes>
+<command:returnValues><command:returnValue><dev:type><maml:name>HistogramBar[]</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:returnValue>
+</command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+<dev:code>Add-Bar -InputObject $Files -Property Length</dev:code>
+<dev:remarks><maml:para>Index lowerBound upperBound Count Bar
+----- ---------- ---------- ----- ---
+1          0    5242880    13 #####################
+2    5242880   10485760    31 ##################################################     3   10485760   15728640    24 #######################################
+4   15728640   20971520    14 #######################
+5   20971520   26214400     5 ########
+6   26214400   31457280     5 ########
+7   31457280   36700160     3 #####
+8   36700160   41943040     2 ###
+9   41943040   47185920     3 #####
+10   47185920   52428800     1 ##
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+<dev:code>$Files | Add-Bar -Property Length</dev:code>
+<dev:remarks><maml:para>
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks></command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Get-Histogram</command:name>
+<command:verb>Get</command:verb>
+<command:noun>Histogram</command:noun>
+<maml:description><maml:para>Visualizes values using bars
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>A graphical representation help understanding data. Add-Bar adds a new member to the input objects which contain bars to visualize the size of the value relative to the maximum value
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Get-Histogram</maml:name>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters></command:parameters>
+<command:inputTypes></command:inputTypes>
+<command:returnValues><command:returnValue><dev:type><maml:name>HistogramBar[]</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:returnValue>
+</command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+<dev:code>Add-Bar -InputObject $Files -Property Length</dev:code>
+<dev:remarks><maml:para>Index lowerBound upperBound Count Bar
+----- ---------- ---------- ----- ---
+1          0    5242880    13 #####################
+2    5242880   10485760    31 ##################################################     3   10485760   15728640    24 #######################################
+4   15728640   20971520    14 #######################
+5   20971520   26214400     5 ########
+6   26214400   31457280     5 ########
+7   31457280   36700160     3 #####
+8   36700160   41943040     2 ###
+9   41943040   47185920     3 #####
+10   47185920   52428800     1 ##
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+<dev:code>$Files | Add-Bar -Property Length</dev:code>
+<dev:remarks><maml:para>
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks></command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Measure-Object</command:name>
+<command:verb>Measure</command:verb>
+<command:noun>Object</command:noun>
+<maml:description><maml:para>Measure-Object [-InputObject] &lt;array&gt; [-Property] &lt;string&gt; [[-Width] &lt;int&gt;] [&lt;CommonParameters&gt;] Calculates the numeric properties of objects, and the characters, words, and lines in string objects, such as files of text.
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>The Measure-Object cmdlet calculates the property values of certain types of object. Measure-Object performs three types of measurements, depending on the parameters in the command.
+</maml:para>
+<maml:para>The Measure-Object cmdlet performs calculations on the property values of objects. It can count objects and calculate the minimum, maximum, sum, and average of the numeric values. For text objects, it can count and calculate the number of lines, words, and characters.
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Measure-Object</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none"><maml:name>Property</maml:name>
+<maml:Description><maml:para>Specifies one or more numeric properties to measure. The default is the Count property of the object.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>Width</maml:name>
+<maml:Description><maml:para>{{Fill Width Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none"><maml:name>InputObject</maml:name>
+<maml:Description><maml:para>Specifies the objects to be measured. Enter a variable that contains the objects, or type a command or expression that gets the objects.
+</maml:para>
+<maml:para>When you use the InputObject parameter with Measure-Object , instead of piping command results to Measure-Object , the InputObject value-even if the value is a collection that is the result of a command, such as `-InputObject (Get-Process)`-is treated as a single object. Because InputObject cannot return individual properties from an array or collection of objects, it is recommended that if you use Measure-Object to measure a collection of objects for those objects that have specific values in defined properties, you use Measure-Object in the pipeline, as shown in the examples in this topic.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Array</command:parameterValue>
+<dev:type><maml:name>Array</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none"><maml:name>InputObject</maml:name>
+<maml:Description><maml:para>Specifies the objects to be measured. Enter a variable that contains the objects, or type a command or expression that gets the objects.
+</maml:para>
+<maml:para>When you use the InputObject parameter with Measure-Object , instead of piping command results to Measure-Object , the InputObject value-even if the value is a collection that is the result of a command, such as `-InputObject (Get-Process)`-is treated as a single object. Because InputObject cannot return individual properties from an array or collection of objects, it is recommended that if you use Measure-Object to measure a collection of objects for those objects that have specific values in defined properties, you use Measure-Object in the pipeline, as shown in the examples in this topic.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Array</command:parameterValue>
+<dev:type><maml:name>Array</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none"><maml:name>Property</maml:name>
+<maml:Description><maml:para>Specifies one or more numeric properties to measure. The default is the Count property of the object.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>Width</maml:name>
+<maml:Description><maml:para>{{Fill Width Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes><command:inputType><dev:type><maml:name>System.Array</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:inputType>
+<command:inputType><dev:type><maml:name>System.Management.Automation.PSObject</maml:name>
+</dev:type>
+<maml:description><maml:para>You can pipe objects to Measure-Object .
+</maml:para>
+</maml:description>
+</command:inputType>
+</command:inputTypes>
+<command:returnValues><command:returnValue><dev:type><maml:name>System.Object</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:returnValue>
+<command:returnValue><dev:type><maml:name>Microsoft.PowerShell.Commands.GenericMeasureInfo, Microsoft.PowerShell.Commands.TextMeasureInfo, Microsoft.PowerShell.Commands.GenericObjectMeasureInfo</maml:name>
+</dev:type>
+<maml:description><maml:para>If you use the Word parameter, Measure-Object returns a TextMeasureInfo object. Otherwise, it returns a GenericMeasureInfo object.
+</maml:para>
+</maml:description>
+</command:returnValue>
+</command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>Example 1: Count the files and folders in a directory</maml:title>
+<dev:code>PS C:\&gt;Get-ChildItem | Measure-Object</dev:code>
+<dev:remarks><maml:para>This command counts the files and folders in the current directory.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 2: Measure the files in a directory</maml:title>
+<dev:code>PS C:\&gt;Get-ChildItem | Measure-Object -Property length -Minimum -Maximum -Average</dev:code>
+<dev:remarks><maml:para>This command displays the minimum, maximum, and sum of the sizes of all files in the current directory, and the average size of a file in the directory.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 3: Measure text in a text file</maml:title>
+<dev:code>PS C:\&gt;Get-Content C:\test.txt | Measure-Object -Character -Line -Word</dev:code>
+<dev:remarks><maml:para>This command displays the number of characters, words, and lines in the Text.txt file.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 4: Measure computer processes</maml:title>
+<dev:code>PS C:\&gt;Get-Process | Measure-Object -Property workingset -Minimum -Maximum -Average</dev:code>
+<dev:remarks><maml:para>This command displays the minimum, maximum, and average sizes of the working sets of the processes on the computer.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 5: Measure the contents of a CSV file</maml:title>
+<dev:code>PS C:\&gt;Import-Csv d:\test\serviceyrs.csv | Measure-Object -Property years -Minimum -Maximum -Average</dev:code>
+<dev:remarks><maml:para>This command calculates the average years of service of the employees of a company.
+</maml:para>
+<maml:para>The ServiceYrs.csv file is a CSV file that contains the employee number and years of service of each employee. The first row in the table is a header row of EmpNo, Years.
+</maml:para>
+<maml:para>When you use Import-Csv to import the file, the result is a PSCustomObject with note properties of EmpNo and Years. You can use Measure-Object to calculate the values of these properties, just like any other property of an object.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 6: Measure Boolean values</maml:title>
+<dev:code>PS C:\&gt;Get-ChildItem | Measure-Object -Property psiscontainer -Max -Sum -Min -Average
+Count    : 126
+Average  : 0.0634920634920635
+Sum      : 8
+Maximum  : 1
+Minimum  : 0
+Property : PSIsContainer</dev:code>
+<dev:remarks><maml:para>This example demonstrates how the Measure-Object can measure Boolean values. In this case, it uses the PSIsContainer Boolean property to measure the incidence of folders (vs. files) in the current directory.
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
+<maml:uri>http://go.microsoft.com/fwlink/?LinkId=821829</maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Compare-Object</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>ForEach-Object</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Group-Object</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>New-Object</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Select-Object</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Sort-Object</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Tee-Object</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Where-Object</maml:linkText>
+<maml:uri></maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Show-Measurement</command:name>
+<command:verb>Show</command:verb>
+<command:noun>Measurement</command:noun>
+<maml:description><maml:para>{{Fill in the Synopsis}}
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>{{Fill in the Description}}
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Show-Measurement</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="none"><maml:name>InputObject</maml:name>
+<maml:Description><maml:para>{{Fill InputObject Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+<dev:type><maml:name>Object</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none"><maml:name>Width</maml:name>
+<maml:Description><maml:para>{{Fill Width Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="none"><maml:name>InputObject</maml:name>
+<maml:Description><maml:para>{{Fill InputObject Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+<dev:type><maml:name>Object</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none"><maml:name>Width</maml:name>
+<maml:Description><maml:para>{{Fill Width Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes><command:inputType><dev:type><maml:name>System.Object</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:inputType>
+</command:inputTypes>
+<command:returnValues><command:returnValue><dev:type><maml:name>System.Object</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:returnValue>
+</command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>Example 1</maml:title>
+<dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+<dev:remarks><maml:para>{{ Add example description here }}
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
+<maml:uri>http://go.microsoft.com/fwlink/?LinkId=821829</maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+</helpItems>
