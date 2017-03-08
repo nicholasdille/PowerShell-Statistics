@@ -1,4 +1,4 @@
-﻿Import-Module "$PSScriptRoot\..\Statistics\Statistics.psm1" -Force
+﻿Import-Module -Name Statistics -Force
 
 Describe 'Statistics' {
     Context 'Get-Histogram' {
