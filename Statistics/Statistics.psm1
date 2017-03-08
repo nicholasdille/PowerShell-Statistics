@@ -1,8 +1,8 @@
-﻿$scriptBody = "using module '$env:BHPSModulePath\HistogramBucket.psm1'"
+﻿$scriptBody = "using module '$PSScriptRoot\HistogramBucket.psm1'"
 $script = [ScriptBlock]::Create($scriptBody)
 . $script
 
-$scriptBody = "using module '$env:BHPSModulePath\HistogramBar.psm1'"
+$scriptBody = "using module '$PSScriptRoot\HistogramBar.psm1'"
 $script = [ScriptBlock]::Create($scriptBody)
 . $script
 
