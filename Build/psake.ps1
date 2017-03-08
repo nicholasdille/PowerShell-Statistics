@@ -35,7 +35,7 @@ Task Test -Depends Init  {
     "`n`tSTATUS: Testing with PowerShell $PSVersion"
 
     # Gather test results. Store them in a variable and file
-    $env:PSModulePath += "$env:BHPSModulePath"
+    $env:PSModulePath += ";$ProjectRoot"
     $TestResults = Invoke-Pester -Path $ProjectRoot\Tests -PassThru -OutputFormat NUnitXml -OutputFile "$ProjectRoot\$TestFile" -CodeCoverage "$env:BHPSModulePath\$env:BHProjectName.psm1"
 
     # In Appveyor?  Upload our tests! #Abstract this into a function?
