@@ -1,14 +1,8 @@
 ﻿# Introduction
 
-XXX
-
-# Usage
-
-XXX
+Statistical analysis
 
 # TODO
-
-XXX
 
 ## General
 
@@ -19,12 +13,7 @@ XXX
   . https://en.m.wikipedia.org/wiki/Percentile
   . https://en.m.wikipedia.org/wiki/Confidence_interval
   . https://en.wikipedia.org/wiki/Histogram
-- Continuous Integration (GitHub, AppVeyor)
-- Confinuous Deployment (GitHub, AppVeyor)
-- Use class and cast hashtable to class
-- Create [formatting file](https://msdn.microsoft.com/en-us/library/gg580944(v=vs.85).aspx)
 - Code coverage (`Invoke-Pester -Script "$PSScriptRoot\Statistics\Statistics.Tests.ps1" -CodeCoverage "$PSScriptRoot\Statistics\Statistics.psm1"`)
-- Use platsPS (https://github.com/PowerShell/platyPS) for help
 
 ## Get-Histogram
 
