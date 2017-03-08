@@ -7,4 +7,4 @@ os: WMF 5
 build: false
 
 test_script:
-- ps: . .\build\Start-Build.ps1 #-Task Deploy
+- ps: . .\build\Start-Build.ps1 -Task Deploy
