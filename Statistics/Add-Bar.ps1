@@ -24,7 +24,7 @@
 
     Process {
         $InputObject | ForEach-Object {
-            if (-Not ($_ | Select-Object -ExpandProperty $Property)) {
+            if (-Not ($_ | Select-Object -ExpandProperty $Property -ErrorAction SilentlyContinue)) {
                 throw ('Input object does not contain a property called <{0}>.' -f $Property)
             }
             $Data += $_
