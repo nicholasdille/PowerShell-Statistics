@@ -1,6 +1,6 @@
 ﻿function Add-Bar {
     [CmdletBinding()]
-    [OutputType([HistogramBar[]])]
+    #[OutputType([HistogramBar[]])]
     Param(
         [Parameter(Mandatory, ValueFromPipeline)]
         [ValidateNotNullOrEmpty()]

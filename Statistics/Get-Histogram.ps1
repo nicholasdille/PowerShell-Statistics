@@ -1,6 +1,6 @@
 ﻿function Get-Histogram {
     [CmdletBinding(DefaultParameterSetName='BucketCount')]
-    [OutputType([HistogramBucket])]
+    #[OutputType([HistogramBucket])]
     Param(
         [Parameter(Mandatory, ValueFromPipeline, Position=1)]
         [ValidateNotNullOrEmpty()]
