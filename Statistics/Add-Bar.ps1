@@ -15,7 +15,7 @@
         [Parameter()]
         [ValidateNotNullOrEmpty()]
         [int]
-        $Width = 50
+        $Width = $( if ($Host -and $Host.UI) { $Host.UI.RawUI.MaxWindowSize.Width - 20 } )
     )
 
     Begin {
