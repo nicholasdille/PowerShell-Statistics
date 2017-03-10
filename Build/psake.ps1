@@ -63,25 +63,25 @@ Task Docs -Depends Test {
     New-ExternalHelp -Path $ProjectRoot\docs -OutputPath $env:BHPSModulePath\en-US
 }
 
-Task Build -Depends Test {
-    $lines
-    
-    # Load the module, read the exported functions, update the psd1 FunctionsToExport
-    Set-ModuleFunctions
+#Task Build -Depends Test {
+#    $lines
+#    
+#    # Load the module, read the exported functions, update the psd1 FunctionsToExport
+#    Set-ModuleFunctions
+#
+#    # Bump the module version
+#    Try
+#    {
+#        $Version = Get-NextPSGalleryVersion -Name $env:BHProjectName -ErrorAction Stop
+#        Update-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -Value $Version -ErrorAction stop
+#    }
+#    Catch
+#    {
+#        "Failed to update version for '$env:BHProjectName': $_.`nContinuing with existing version"
+#    }
+#}
 
-    # Bump the module version
-    Try
-    {
-        $Version = Get-NextPSGalleryVersion -Name $env:BHProjectName -ErrorAction Stop
-        Update-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -Value $Version -ErrorAction stop
-    }
-    Catch
-    {
-        "Failed to update version for '$env:BHProjectName': $_.`nContinuing with existing version"
-    }
-}
-
-Task Deploy -Depends Build {
+Task Deploy #-Depends Build {
     $lines
 
     $Params = @{
