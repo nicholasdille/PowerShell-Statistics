@@ -81,7 +81,8 @@ Task Docs -Depends Test {
 #    }
 #}
 
-Task Deploy #-Depends Build {
+#Task Deploy -Depends Build {
+Task Deploy -Depends Test,Docs {
     $lines
 
     $Params = @{
