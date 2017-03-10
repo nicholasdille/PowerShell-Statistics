@@ -7,10 +7,10 @@
         [array]
         $InputObject
         ,
-        [Parameter(Mandatory)]
+        [Parameter()]
         [ValidateNotNullOrEmpty()]
         [string]
-        $Property
+        $Property = 'Count'
         ,
         [Parameter()]
         [ValidateNotNullOrEmpty()]
