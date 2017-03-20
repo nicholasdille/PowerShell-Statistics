@@ -80,7 +80,7 @@ Task Build -Depends Test,Docs {
     $manifest.ModuleVersion
 
     If($ENV:BHBuildSystem -eq 'AppVeyor') {
-        Update-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -Value "$($manifest.ModuleVersion)-$env:APPVEYOR_BUILD_NUMBER" -ErrorAction stop
+        Update-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -Value "$($manifest.ModuleVersion).$env:APPVEYOR_BUILD_NUMBER" -ErrorAction stop
     }
 }
 
