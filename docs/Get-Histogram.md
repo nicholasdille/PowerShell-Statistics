@@ -52,3 +52,4 @@ $Files | Add-Bar -Property Length
 
 ## RELATED LINKS
 
+https://en.wikipedia.org/wiki/Histogram

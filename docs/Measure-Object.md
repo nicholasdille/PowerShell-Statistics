@@ -75,19 +75,12 @@ You can pipe objects to Measure-Object.
 
 ## RELATED LINKS
 
-[Compare-Object]()
+[Median](https://en.m.wikipedia.org/wiki/Median)
 
-[ForEach-Object]()
+[Variance](https://en.m.wikipedia.org/wiki/Variance)
 
-[Group-Object]()
+[Standard deviation](https://en.m.wikipedia.org/wiki/Standard_deviation)
 
-[New-Object]()
+[Percentile](https://en.m.wikipedia.org/wiki/Percentile)
 
-[Select-Object]()
-
-[Sort-Object]()
-
-[Tee-Object]()
-
-[Where-Object]()
-
+[Confidence interval](https://en.m.wikipedia.org/wiki/Confidence_interval)

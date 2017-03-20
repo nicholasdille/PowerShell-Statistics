@@ -79,3 +79,12 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
+[Median](https://en.m.wikipedia.org/wiki/Median)
+
+[Variance](https://en.m.wikipedia.org/wiki/Variance)
+
+[Standard deviation](https://en.m.wikipedia.org/wiki/Standard_deviation)
+
+[Percentile](https://en.m.wikipedia.org/wiki/Percentile)
+
+[Confidence interval](https://en.m.wikipedia.org/wiki/Confidence_interval)
