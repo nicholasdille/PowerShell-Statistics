@@ -10,11 +10,6 @@
         [ValidateNotNullOrEmpty()]
         [string]
         $Property
-        ,
-        [Parameter()]
-        [ValidateNotNullOrEmpty()]
-        [int]
-        $Width = 100
     )
     
     Begin {
