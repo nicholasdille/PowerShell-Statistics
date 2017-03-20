@@ -36,11 +36,15 @@
     )
 
     Begin {
+        Write-Verbose ('[{0}] Initializing' -f $MyInvocation.MyCommand)
+
         $Buckets = @{}
         $Data = @()
     }
 
     Process {
+        Write-Verbose ('[{0}] Processing {1} items' -f $MyInvocation.MyCommand, $InputObject.Length)
+
         $InputObject | ForEach-Object {
             if (-Not ($_ | Select-Object -ExpandProperty $Property -ErrorAction SilentlyContinue)) {
                 throw ('Input object does not contain a property called <{0}>.' -f $Property)
@@ -50,21 +54,28 @@
     }
 
     End {
+        Write-Verbose ('[{0}] Building histogram' -f $MyInvocation.MyCommand)
+
+        Write-Debug ('[{0}] Retrieving measurements from upstream cmdlet.' -f $MyInvocation.MyCommand)
         $Stats = $Data | Microsoft.PowerShell.Utility\Measure-Object -Minimum -Maximum -Property $Property
+
         if (-Not $PSBoundParameters.ContainsKey('Minimum')) {
             $Minimum = $Stats.Minimum
+            Write-Debug ('[{0}] Minimum value not specified. Using smallest value ({1}) from input data.' -f $MyInvocation.MyCommand, $Minimum)
         }
         if (-Not $PSBoundParameters.ContainsKey('Maximum')) {
             $Maximum = $Stats.Maximum
+            Write-Debug ('[{0}] Maximum value not specified. Using largest value ({1}) from input data.' -f $MyInvocation.MyCommand, $Maximum)
         }
         if (-Not $PSBoundParameters.ContainsKey('BucketCount')) {
             $BucketCount = [math]::Ceiling(($Maximum - $Minimum) / $BucketWidth)
+            Write-Debug ('[{0}] Bucket count not specified. Calculated {1} buckets from width of {2}.' -f $MyInvocation.MyCommand, $BucketCount, $BucketWidth)
         }
         if ($BucketCount -gt 100) {
             Write-Warning ('[{0}] Generating {1} buckets' -f $MyInvocation.MyCommand, $BucketCount)
         }
-        Write-Verbose ('Minimum=<{0}> Maximum=<{1}> BucketWidth=<{2}> BucketCount=<{3}>' -f $Minimum, $Maximum, $BucketWidth, $BucketCount)
 
+        Write-Debug ('[{0}] Building buckets using: Minimum=<{1}> Maximum=<{2}> BucketWidth=<{3}> BucketCount=<{4}>' -f $MyInvocation.MyCommand, $Minimum, $Maximum, $BucketWidth, $BucketCount)
         $OverallCount = 0
         $Buckets = 1..$BucketCount | ForEach-Object {
             [HistogramBucket]@{
@@ -76,6 +87,8 @@
                 Group         = @()
             }
         }
+
+        Write-Debug ('[{0}] Building histogram' -f $MyInvocation.MyCommand)
         $Data | ForEach-Object {
             $Value = $_.$Property
             
@@ -88,10 +101,13 @@
                 }
             }
         }
+
+        Write-Debug ('[{0}] Adding relative count' -f $MyInvocation.MyCommand)
         $Buckets | ForEach-Object {
             $_.RelativeCount = $_.Count / $OverallCount
         }
 
+        Write-Debug ('[{0}] Returning histogram' -f $MyInvocation.MyCommand)
         [HistogramBucket[]]$Buckets
     }
 }

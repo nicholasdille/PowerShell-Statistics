@@ -19,10 +19,14 @@
     )
 
     Begin {
+        Write-Verbose ('[{0}] Initializing' -f $MyInvocation.MyCommand)
+        
         $Data = @()
     }
 
     Process {
+        Write-Verbose ('[{0}] Processing {1} items' -f $MyInvocation.MyCommand, $InputObject.Length)
+
         $InputObject | ForEach-Object {
             if (-Not ($_ | Select-Object -ExpandProperty $Property -ErrorAction SilentlyContinue)) {
                 throw ('Input object does not contain a property called <{0}>.' -f $Property)
@@ -32,12 +36,20 @@
     }
 
     End {
+        Write-Verbose ('[{0}] Adding bars' -f $MyInvocation.MyCommand)
+
         $Count = $Data | Microsoft.PowerShell.Utility\Measure-Object -Maximum -Property $Property | Select-Object -ExpandProperty Maximum
+        Write-Debug ('[{0}] Maximum value is {1}. This value will be {2} characters long.' -f $MyInvocation.MyCommand, $Count, $Width)
+
         $Bars = $Data | ForEach-Object {
             $RelativeCount = [math]::Round($_.$Property / $Count * $Width, 0)
-            #Add-Member -InputObject $_ -MemberType NoteProperty -Name Bar -Value ('#' * $RelativeCount)
+            Write-Debug ('[{0}] Value of {1} will be displayed using {2} characters.' -f $MyInvocation.MyCommand, $_.Property, $RelativeCount)
+
+            Write-Debug ('[{0}] Adding member to input object.' -f $MyInvocation.MyCommand)
             $_ | Select-Object -Property Index,Count | Add-Member -MemberType NoteProperty -Name Bar -Value ('#' * $RelativeCount) -PassThru
         }
+
+        Write-Debug ('[{0}] Returning input objects with bars.' -f $MyInvocation.MyCommand)
         [HistogramBar[]]$Bars
     }
 }
