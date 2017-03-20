@@ -28,10 +28,8 @@ See below for TODOs
 
 ## Measure-Object
 
-- Add help
 - Add verbose and debug messages
 
 ## Show-Measurement
 
-- Add help
 - Add verbose and debug messages
