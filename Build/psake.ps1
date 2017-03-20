@@ -77,7 +77,6 @@ Task Build -Depends Test,Docs {
     [string[]] $allowedVariables = @('PSScriptRoot')
     $scriptBlock.CheckRestrictedLanguage($allowedCommands, $allowedVariables, $true)
     $manifest = & $scriptBlock
-    $manifest.ModuleVersion
 
     If($ENV:BHBuildSystem -eq 'AppVeyor') {
         Update-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -Value "$($manifest.ModuleVersion).$env:APPVEYOR_BUILD_NUMBER" -ErrorAction stop
