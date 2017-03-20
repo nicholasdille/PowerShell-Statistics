@@ -30,13 +30,7 @@ Task Init {
     "`n"
 }
 
-Task Clean {
-    $lines
-
-    Remove-Item -Path $env:BHPSModulePath\en-US\Statistics-help.xml -Force
-}
-
-Task Test -Depends Init,Clean  {
+Task Test -Depends Init  {
     $lines
     "`n`tSTATUS: Testing with PowerShell $PSVersion"
 
@@ -66,7 +60,7 @@ Task Test -Depends Init,Clean  {
 Task Docs -Depends Test {
     $lines
 
-    New-ExternalHelp -Path $ProjectRoot\docs -OutputPath $env:BHPSModulePath\en-US
+    New-ExternalHelp -Path $ProjectRoot\docs -OutputPath $env:BHPSModulePath\en-US -Force
 }
 
 Task Build -Depends Test,Docs {
