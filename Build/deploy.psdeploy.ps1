@@ -60,3 +60,16 @@ if(
         }
     }
 }
+
+if (
+    $env:BHPSModulePath -and
+    $env:BHBuildSystem -eq 'Unknown'
+)
+{
+    Deploy LocalModule {
+        By FileSystem {
+            FromSource $env:BHPSModulePath
+            To $env:userprofile\Documents\WindowsPowerShell\Modules\$env:BHProjectName
+        }
+    }
+}
