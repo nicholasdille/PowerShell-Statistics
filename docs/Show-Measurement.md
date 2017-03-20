@@ -7,7 +7,7 @@ schema: 2.0.0
 # Show-Measurement
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Visualizes statistical data about input values
 
 ## SYNTAX
 
@@ -16,21 +16,28 @@ Show-Measurement [-InputObject] <Object> [[-Width] <Int32>]
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+Show-Measurement relies on the overload of Measure-Object provided by this module. It visualizes the data calculated by Measure-Object on the console.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Get-Process | Measure-Object -Property WorkingSet | Show-Measurement
+---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|
+P10
+ P25
+         A
+      c-----C
+   M
+            P75
+                        P90
+---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|
 ```
-
-{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -InputObject
-{{Fill InputObject Description}}
+Single object produced by Measure-Object included in this module
 
 ```yaml
 Type: Object
@@ -45,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -Width
-{{Fill Width Description}}
+Maximum number of characters to display per line
 
 ```yaml
 Type: Int32
