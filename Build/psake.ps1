@@ -30,7 +30,13 @@ Task Init {
     "`n"
 }
 
-Task Test -Depends Init  {
+Task Clean {
+    $lines
+
+    Remove-Item -Path $env:BHPSModulePath\en-US\Statistics-help.xml -Force
+}
+
+Task Test -Depends Init,Clean  {
     $lines
     "`n`tSTATUS: Testing with PowerShell $PSVersion"
 
@@ -63,26 +69,28 @@ Task Docs -Depends Test {
     New-ExternalHelp -Path $ProjectRoot\docs -OutputPath $env:BHPSModulePath\en-US
 }
 
-#Task Build -Depends Test {
-#    $lines
-#    
-#    # Load the module, read the exported functions, update the psd1 FunctionsToExport
-#    Set-ModuleFunctions
-#
-#    # Bump the module version
-#    Try
-#    {
-#        $Version = Get-NextPSGalleryVersion -Name $env:BHProjectName -ErrorAction Stop
-#        Update-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -Value $Version -ErrorAction stop
-#    }
-#    Catch
-#    {
-#        "Failed to update version for '$env:BHProjectName': $_.`nContinuing with existing version"
-#    }
-#}
+Task Build -Depends Test,Docs {
+    $lines
+    
+    # Load the module, read the exported functions, update the psd1 FunctionsToExport
+    Set-ModuleFunctions
 
-#Task Deploy -Depends Build {
-Task Deploy -Depends Test,Docs {
+    $content = Get-Content -Path $env:BHPSModuleManifest -Raw -ErrorAction Stop
+    $scriptBlock = [scriptblock]::Create($content)
+    [string[]] $allowedCommands = @(
+        'Import-LocalizedData', 'ConvertFrom-StringData', 'Write-Host', 'Out-Host', 'Join-Path'
+    )
+    [string[]] $allowedVariables = @('PSScriptRoot')
+    $scriptBlock.CheckRestrictedLanguage($allowedCommands, $allowedVariables, $true)
+    $manifest = & $scriptBlock
+    $manifest.ModuleVersion
+
+    If($ENV:BHBuildSystem -eq 'AppVeyor') {
+        Update-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -Value "$($manifest.ModuleVersion)-$env:APPVEYOR_BUILD_NUMBER" -ErrorAction stop
+    }
+}
+
+Task Deploy -Depends Build {
     $lines
 
     $Params = @{
