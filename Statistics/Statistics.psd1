@@ -7,10 +7,10 @@
     Copyright = '(c) 2017 Nicholas Dille. All rights reserved.'
     Description = 'Statistical analysis'
     PowerShellVersion = '5.0'
-    FunctionsToExport = @('Add-Bar','Get-Histogram','Measure-Object','Show-Measurement','ab','gh','mo','sm')
-    CmdletsToExport = '*'
+    FunctionsToExport = @('Add-Bar', 'Get-Histogram', 'Measure-Object', 'Show-Measurement')
+    CmdletsToExport = ''
     VariablesToExport = ''
-    AliasesToExport = '*'
+    AliasesToExport = @('ab', 'gh', 'mo', 'sm')
     FormatsToProcess = @(
         'HistogramBucket.Format.ps1xml'
         'HistogramBar.Format.ps1xml'
