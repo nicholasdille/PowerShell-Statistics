@@ -28,7 +28,7 @@
         Write-Verbose ('[{0}] Processing {1} items' -f $MyInvocation.MyCommand, $InputObject.Length)
 
         $InputObject | ForEach-Object {
-            if (-Not ($_ | Select-Object -ExpandProperty $Property -ErrorAction SilentlyContinue)) {
+            if (($_ | Select-Object -ExpandProperty $Property -ErrorAction SilentlyContinue) -eq $null) {
                 throw ('Input object does not contain a property called <{0}>.' -f $Property)
             }
             $Data += $_
