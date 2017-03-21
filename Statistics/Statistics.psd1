@@ -25,10 +25,7 @@
             )
             LicenseUri = 'https://github.com/nicholasdille/PowerShell-Statistics/blob/master/LICENSE'
             ProjectUri = 'https://github.com/nicholasdille/PowerShell-Statistics'
-            # IconUri = ''
-            # ReleaseNotes = ''
+            ReleaseNotes = 'https://github.com/nicholasdille/PowerShell-Statistics/releases'
         }
     }
-    # HelpInfoURI = ''
-    # DefaultCommandPrefix = ''
 }
