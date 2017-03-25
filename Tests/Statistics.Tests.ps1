@@ -44,7 +44,7 @@ Describe 'Statistics' {
         }
         It 'Produces output type [HistogramBucket]' {
             $item = Get-Process | Add-Bar -Property WorkingSet -Width 50 | Select-Object -First 1
-            $item.PSTypeNames -contains 'HistogramBucket' | Should Be $true
+            $item.PSTypeNames -contains 'HistogramBar' | Should Be $true
         }
         It 'Has one bar of maximum width' {
             $data = Get-Process | Select-Object -Property Name,Id,WorkingSet
