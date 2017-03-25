@@ -13,6 +13,10 @@ Describe 'Statistics' {
             $histogram -is [array] | Should Be $true
             $histogram.Length | Should Be 9
         }
+        It 'Produces output type [HistogramBucket]' {
+            $item = $data | Get-Histogram -Property Value | Select-Object -First 1
+            $item.PSTypeNames -contains 'HistogramBucket' | Should Be $true
+        }
         It 'Honors minimum and maximum values' {
             $histogram = Get-Histogram -InputObject $data -Property Value -Minimum 2 -Maximum 5
             $histogram | Select-Object -First 1 -ExpandProperty lowerBound | Should Be 2
@@ -37,6 +41,10 @@ Describe 'Statistics' {
             $bars | ForEach-Object {
                 $_.PSObject.Properties | Where-Object Name -eq 'Bar' | Select-Object -ExpandProperty Name | Should Be 'Bar'
             }
+        }
+        It 'Produces output type [HistogramBucket]' {
+            $item = Get-Process | Add-Bar -Property WorkingSet -Width 50 | Select-Object -First 1
+            $item.PSTypeNames -contains 'HistogramBucket' | Should Be $true
         }
         It 'Has one bar of maximum width' {
             $data = Get-Process | Select-Object -Property Name,Id,WorkingSet
