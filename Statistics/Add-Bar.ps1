@@ -1,6 +1,5 @@
 ﻿function Add-Bar {
     [CmdletBinding()]
-    #[OutputType([HistogramBar[]])]
     Param(
         [Parameter(Mandatory, ValueFromPipeline)]
         [ValidateNotNullOrEmpty()]
@@ -46,11 +45,17 @@
             Write-Debug ('[{0}] Value of {1} will be displayed using {2} characters.' -f $MyInvocation.MyCommand, $_.Property, $RelativeCount)
 
             Write-Debug ('[{0}] Adding member to input object.' -f $MyInvocation.MyCommand)
-            $_ | Select-Object -Property Index,Count | Add-Member -MemberType NoteProperty -Name Bar -Value ('#' * $RelativeCount) -PassThru
+            $Item = $_ | Select-Object -Property Index,Count | Add-Member -MemberType NoteProperty -Name Bar -Value ('#' * $RelativeCount) -PassThru
+
+            Write-Debug ('[{0}] Adding type name to output object.' -f $MyInvocation.MyCommand)
+            $Item.PSTypeNames.Insert(0, 'HistogramBar')
+
+            Write-Debug ('[{0}] Returning output object.' -f $MyInvocation.MyCommand)
+            $Item
         }
 
         Write-Debug ('[{0}] Returning input objects with bars.' -f $MyInvocation.MyCommand)
-        [HistogramBar[]]$Bars
+        $Bars
     }
 }
 

@@ -1,6 +1,5 @@
 ﻿function Get-Histogram {
     [CmdletBinding(DefaultParameterSetName='BucketCount')]
-    #[OutputType([HistogramBucket])]
     Param(
         [Parameter(Mandatory, ValueFromPipeline, Position=1)]
         [ValidateNotNullOrEmpty()]
@@ -78,13 +77,14 @@
         Write-Debug ('[{0}] Building buckets using: Minimum=<{1}> Maximum=<{2}> BucketWidth=<{3}> BucketCount=<{4}>' -f $MyInvocation.MyCommand, $Minimum, $Maximum, $BucketWidth, $BucketCount)
         $OverallCount = 0
         $Buckets = 1..$BucketCount | ForEach-Object {
-            [HistogramBucket]@{
+            [pscustomobject]@{
                 Index         = $_
                 lowerBound    = $Minimum + ($_ - 1) * $BucketWidth
                 upperBound    = $Minimum +  $_      * $BucketWidth
                 Count         = 0
                 RelativeCount = 0
                 Group         = @()
+                PSTypeName    = 'HistogramBucket'
             }
         }
 
@@ -108,7 +108,7 @@
         }
 
         Write-Debug ('[{0}] Returning histogram' -f $MyInvocation.MyCommand)
-        [HistogramBucket[]]$Buckets
+        $Buckets
     }
 }
 
