@@ -20,7 +20,9 @@ The cmdlet accepts values in primitive types and wraps them in a new object with
 
 ## EXAMPLES
 
+```
 1..10 | ConvertFrom-PrimitiveType
+```
 
 ## PARAMETERS
 
