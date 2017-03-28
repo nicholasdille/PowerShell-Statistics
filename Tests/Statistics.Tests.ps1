@@ -1,8 +1,24 @@
 ﻿Import-Module -Name Statistics -Force
 
 Describe 'Statistics' {
+    Context 'ConvertFrom-PrimitiveType' {
+        $array = @(1, 2, 3)
+        It 'Produces output from parameter' {
+            $data = ConvertFrom-PrimitiveType -InputObject $array
+            $data -is [array] | Should Be $true
+            $data.Length | Should Be $array.Length
+        }
+        It 'Produces output from pipeline' {
+            $data = $array | ConvertFrom-PrimitiveType
+            $data -is [array] | Should Be $true
+            $data.Length | Should Be $array.Length
+        }
+        It 'Throws on piped complex type' {
+            { Get-Process | Select-Object -First 1 | ConvertFrom-PrimitiveType } | Should Throw
+        }
+    }
     Context 'Get-Histogram' {
-        $data = 1..10 | ForEach-Object { [pscustomobject]@{Value = $_} }
+        $data = 1..10 | ConvertFrom-PrimitiveType
         It 'Produces output from parameter' {
             $histogram = Get-Histogram -InputObject $data -Property Value
             $histogram -is [array] | Should Be $true
@@ -58,22 +74,22 @@ Describe 'Statistics' {
     }
     Context 'Measure-Object' {
         It 'Produces output from parameter' {
-            $data = 0..10 | ForEach-Object { [pscustomobject]@{Value = $_} }
+            $data = 0..10 | ConvertFrom-PrimitiveType
             $Stats = Measure-Object -InputObject $data -Property Value
             $Stats | Select-Object -ExpandProperty Property | Should Be 'Value'
         }
         It 'Produces output from pipeline' {
-            $data = 0..10 | ForEach-Object { [pscustomobject]@{Value = $_} }
+            $data = 0..10 | ConvertFrom-PrimitiveType
             $Stats = $data | Measure-Object -Property Value
             $Stats | Select-Object -ExpandProperty Property | Should Be 'Value'
         }
         It 'Produces correct Median for an odd number of values' {
-            $data = 0..10 | ForEach-Object { [pscustomobject]@{Value = $_} }
+            $data = 0..10 | ConvertFrom-PrimitiveType
             $Stats = Measure-Object -InputObject $data -Property Value
             $Stats.Median | Should Be 5
         }
         It 'Produces correct Median for an even number of values' {
-            $data = 1..10 | ForEach-Object { [pscustomobject]@{Value = $_} }
+            $data = 1..10 | ConvertFrom-PrimitiveType
             $Stats = Measure-Object -InputObject $data -Property Value
             $Stats.Median | Should Be 5.5
         }
@@ -83,7 +99,7 @@ Describe 'Statistics' {
         }
     }
     Context 'Show-Measurement' {
-        $stats = 0..10 | ForEach-Object { [pscustomobject]@{Value = $_} } | Measure-Object -Property Value
+        $stats = 0..10 | ConvertFrom-PrimitiveType | Measure-Object -Property Value
         It 'Produces a string' {
             $graph = $stats | Show-Measurement
             $graph -is [string] | Should Be $true
