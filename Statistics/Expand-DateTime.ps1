@@ -24,6 +24,7 @@ function Expand-DateTime {
             if ($DateTimeExpanded -isnot [System.DateTime]) {
                 Write-Debug 'inside if'
                 $DateTimeExpanded = Get-Date -Date $_.$Property
+                $_.$Property = $DateTimeExpanded
             }
 
             foreach ($DateTimeProperty in @('DayOfWeek', 'Year', 'Month', 'Hour')) {
