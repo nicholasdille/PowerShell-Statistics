@@ -16,6 +16,10 @@ function Expand-DateTime {
         Write-Debug ('[{0}] Entering process block' -f $MyInvocation.MyCommand)
         $InputObject | ForEach-Object {
             Write-Debug 'inside foreach'
+            if (($_ | Select-Object -Property $Property -ErrorAction 'SilentlyContinue') -eq $null) {
+                throw ('[{0}] Unable to find property <{1}> in input object' -f $MyInvocation.MyCommand, $Property)
+            }
+
             $DateTimeExpanded = $_.$Property
             if ($DateTimeExpanded -isnot [System.DateTime]) {
                 Write-Debug 'inside if'
