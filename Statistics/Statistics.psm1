@@ -4,10 +4,16 @@
 
 #region Conversions
 . "$PSScriptRoot\ConvertFrom-PrimitiveType.ps1"
+. "$PSScriptRoot\ConvertFrom-PerformanceCounter.ps1"
+. "$PSScriptRoot\Expand-DateTime.ps1"
 #endregion
 
 #region Analysis
 . "$PSScriptRoot\Get-Histogram.ps1"
+. "$PSScriptRoot\Measure-Group.ps1"
+. "$PSScriptRoot\Get-InterarrivalTime.ps1"
+. "$PSScriptRoot\Get-SlidingAverage.ps1"
+. "$PSScriptRoot\Get-WeightedValue.ps1"
 #endregion
 
 #region Visualization
