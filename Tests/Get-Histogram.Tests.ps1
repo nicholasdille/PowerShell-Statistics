@@ -1,6 +1,6 @@
 Import-Module -Name Statistics -Force
 
-Describe 'Statistics' {
+Describe 'Get-Histogram' {
     $data = 1..10 | ConvertFrom-PrimitiveType
     It 'Produces output from parameter' {
         $histogram = Get-Histogram -InputObject $data -Property Value

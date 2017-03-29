@@ -1,6 +1,6 @@
 Import-Module -Name Statistics -Force
 
-Describe 'Statistics' {
+Describe 'Add-Bar' {
     It 'Produces bars from parameter' {
         $data = Get-Process | Select-Object -Property Name,Id,WorkingSet
         $bars = Add-Bar -InputObject $data -Property WorkingSet -Width 50

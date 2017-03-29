@@ -1,6 +1,6 @@
 Import-Module -Name Statistics -Force
 
-Describe 'Statistics' {
+Describe 'Measure-Object' {
     It 'Produces output from parameter' {
         $data = 0..10 | ConvertFrom-PrimitiveType
         $Stats = Measure-Object -InputObject $data -Property Value
