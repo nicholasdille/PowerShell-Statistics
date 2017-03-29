@@ -10,6 +10,6 @@ Describe 'Get-InterarrivalTime' {
     } | Sort-Object -Property Timestamp
     It 'Produces the correct members' {
         $data = $data | Get-InterarrivalTime -Property Timestamp
-        { $data.InterarrivalTicks } | Should Not Throw
+        { $data | Select-Object -ExpandProperty InterarrivalTicks -ErrorAction SilentlyContinue } | Should Not Throw
     }
 }

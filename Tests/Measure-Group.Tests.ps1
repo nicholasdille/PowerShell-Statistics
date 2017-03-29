@@ -10,6 +10,6 @@ Describe 'Measure-Group' {
             }
         } | Sort-Object -Property Timestamp
         $group = $data | Expand-DateTime | Group-Object -Property Hour | Measure-Group -Property Value
-        { $group.Average } | Should Not Throw
+        { $group | Select-Object -ExpandProperty Average -ErrorAction SilentlyContinue } | Should Not Throw
     }
 }
