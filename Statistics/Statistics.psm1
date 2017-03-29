@@ -1,4 +1,8 @@
-﻿#region Overloading
+﻿#region Helpers
+. "$PSScriptRoot\Get-ExampleTimeSeries.ps1"
+#endregion
+
+#region Overloading
 . "$PSScriptRoot\Measure-Object.ps1"
 #endregion
 
