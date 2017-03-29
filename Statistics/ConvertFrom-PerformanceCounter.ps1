@@ -6,10 +6,10 @@
         [array]
         $InputObject
         ,
-        [Parameter()]
+        [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [string]
-        $Instance = '_total'
+        $Instance
     )
 
     Process {
