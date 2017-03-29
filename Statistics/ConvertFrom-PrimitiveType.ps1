@@ -21,4 +21,4 @@ function ConvertFrom-PrimitiveType {
     }
 }
 
-New-Alias -Name cfpt -Value ConvertFrom-PrimitiveType
+New-Alias -Name cfpt -Value ConvertFrom-PrimitiveType -Force
