@@ -10,6 +10,7 @@ Statistical analysis
 - More tests
 - Get-SlidingAverage
   - Output data similar to `Group-Object` by adding properties `Property`, `Group` and `Average`
+- Filter performance counters from `(Get-Counter).CounterSamples`
 
 # Warning
 
