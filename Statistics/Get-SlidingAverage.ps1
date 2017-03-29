@@ -24,14 +24,23 @@ function Get-SlidingAverage {
 
     Process {
         $InputObject | ForEach-Object {
+            if (($_ | Select-Object -Property $Property -ErrorAction 'SilentlyContinue') -eq $null) {
+                throw ('[{0}] Unable to find property <{1}> in input object' -f $MyInvocation.MyCommand, $Property)
+            }
+
+            #region Enqueue new item and trim to specified size
             $q.Enqueue($_)
             Write-Debug ('[{0}] Size of queue is <{1}>' -f $MyInvocation.MyCommand, $q.Count)
             if ($q.Count -gt $Size) {
                 $q.Dequeue() | Out-Null
             }
+            #endregion
+
+            #region Calculate average if the specified number of items is present
             if ($q.Count -eq $Size) {
-                $q | Measure-Object -Property $Property -Average | Select-Object -ExpandProperty Average
+                $q | Microsoft.PowerShell.Utility\Measure-Object -Property $Property -Average | Select-Object -ExpandProperty Average
             }
+            #endregion
         }
     }
 }
