@@ -1,11 +1,11 @@
 @{
     RootModule = 'Statistics.psm1'
-    ModuleVersion = '1.0'
+    ModuleVersion = '1.1'
     GUID = 'd5add589-39c5-4f5a-a200-ba8258085bc9'
     Author = 'Nicholas Dille'
     # CompanyName = ''
     Copyright = '(c) 2017 Nicholas Dille. All rights reserved.'
-    Description = 'Statistical analysis'
+    Description = 'Statistical analysis of data in the console window. For example this module can generate a histogram (Get-Histogram) and visualize it (Add-Bar). It also provides several statistical properties of the input data (Measure-Object and Show-Measurement). Using Get-SlidingAverage, data can be analyzed in a pipeline in real-time.'
     PowerShellVersion = '5.0'
     FunctionsToExport = @(
         'Measure-Object'
