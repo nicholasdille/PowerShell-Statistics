@@ -70,6 +70,12 @@
         Add-Member -InputObject $Stats -MemberType NoteProperty -Name 'Variance' -Value $Variance
         #endregion
 
+        #region Calculate Tukey's range for outliers
+        $TukeysOutlier = 1.5
+        $TukeysRange = $TukeysOutlier * ($Stats.Percentile75 - $Stats.Percentile25)
+        Add-Member -InputObject $Stats -MemberType NoteProperty -Name TukeysRange -Value $TukeysRange
+        #endregion
+
         #region Calculate standard deviation
         $StandardDeviation = [math]::Sqrt($Stats.Variance)
         Add-Member -InputObject $Stats -MemberType NoteProperty -Name 'StandardDeviation' -Value $StandardDeviation
