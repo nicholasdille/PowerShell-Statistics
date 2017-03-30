@@ -27,10 +27,13 @@ function Expand-DateTime {
                 $_.$Property = $DateTimeExpanded
             }
 
-            foreach ($DateTimeProperty in @('DayOfWeek', 'Year', 'Month', 'Hour')) {
+            foreach ($DateTimeProperty in @('DayOfWeek')) {
                 Add-Member -InputObject $_ -MemberType NoteProperty -Name $DateTimeProperty -Value $DateTimeExpanded.$DateTimeProperty
             }
-            Add-Member -InputObject $_ -MemberType NoteProperty -Name WeekOfYear -Value (Get-Date -Date $_.$Property -UFormat '%V')
+            foreach ($DateTimeProperty in @('Year', 'Month', 'Hour')) {
+                Add-Member -InputObject $_ -MemberType NoteProperty -Name $DateTimeProperty -Value ([int]($DateTimeExpanded.$DateTimeProperty))
+            }
+            Add-Member -InputObject $_ -MemberType NoteProperty -Name WeekOfYear -Value ([int](Get-Date -Date $_.$Property -UFormat '%V'))
 
             $_
         }
