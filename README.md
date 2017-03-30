@@ -6,6 +6,8 @@ Statistical analysis
 
 # TODO
 
+- Display values in `Show-Measurement`... include minimum and maximum
+- Limit displayed range in `Show-Measurement`
 - Check handling of negative values
 - More tests
 - Get-SlidingAverage
