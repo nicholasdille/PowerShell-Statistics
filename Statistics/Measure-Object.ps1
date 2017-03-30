@@ -64,7 +64,7 @@
         #region Calculate variance
         $Variance = 0
         $Data | ForEach-Object {
-            $Variance += [math]::Pow($_.$Property - $Stats.Average, 2)
+            $Variance += [math]::Pow($_.$Property - $Stats.Average, 2) / $Stats.Count
         }
         $Variance /= $Stats.Count
         Add-Member -InputObject $Stats -MemberType NoteProperty -Name 'Variance' -Value $Variance
