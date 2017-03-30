@@ -1,5 +1,6 @@
 ﻿#region Helpers
 . "$PSScriptRoot\Get-ExampleTimeSeries.ps1"
+. "$PSScriptRoot\New-RangeString.ps1"
 #endregion
 
 #region Overloading
