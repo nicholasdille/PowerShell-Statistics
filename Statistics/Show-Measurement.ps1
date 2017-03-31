@@ -1,7 +1,7 @@
 ﻿function Show-Measurement {
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory, ValueFromPipeline)]
+        [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [object]
         $InputObject
@@ -9,7 +9,7 @@
         [Parameter()]
         [ValidateNotNullOrEmpty()]
         [int]
-        $Width = $( if ($Host -and $Host.UI) { $Host.UI.RawUI.MaxWindowSize.Width - 10 } else { 90 } )
+        $Width = $( if ($Host.UI.RawUI.MaxWindowSize.Width) { $Host.UI.RawUI.MaxWindowSize.Width - 10 } else { 90 } )
         ,
         [switch]
         $PassThru
@@ -30,7 +30,7 @@
         $P25SubTukIndex  = [math]::Round(($InputObject.Percentile25 - $InputObject.TukeysRange)  / $InputObject.Maximum * $Width, 0)
         $P75AddTukIndex  = [math]::Round(($InputObject.Percentile75 + $InputObject.TukeysRange)  / $InputObject.Maximum * $Width, 0)
 
-        Write-Debug "P10=$P10Index P25=$P25Index A=$AvgIndex M=$MedIndex sA=$AvgSubDevIndex As=$AvgAddDevIndex cA=$AvgSubConfIndex aC=$AvgAddConfIndex P75=$P75Index P90=$P90Index"
+        Write-Debug "P10=$P10Index P25=$P25Index A=$AvgIndex M=$MedIndex sA=$AvgSubDevIndex As=$AvgAddDevIndex cA=$AvgSubConfIndex aC=$AvgAddConfIndex o=$P25SubTukIndex O=$P75AddTukIndex P75=$P75Index P90=$P90Index"
 
         $graph = @()
         $graph += 'Range             : ' + '---------|' * ($Width / 10)
