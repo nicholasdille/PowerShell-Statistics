@@ -13,6 +13,9 @@ Statistical analysis
 - Get-SlidingAverage
   - Output data similar to `Group-Object` by adding properties `Property`, `Group` and `Average`
 - Filter performance counters from `(Get-Counter).CounterSamples`
+- Progress bar
+  - Implement in all cmdlets
+  - Support for child bars
 
 # Warning
 
