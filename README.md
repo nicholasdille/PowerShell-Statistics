@@ -16,6 +16,8 @@ Statistical analysis
 - Progress bar
   - Implement in all cmdlets
   - Support for child bars
+- Performance improvements by using ArrayList instead of `+=`
+- Provide predefined buckets to `Get-Histogram`
 
 # Warning
 
