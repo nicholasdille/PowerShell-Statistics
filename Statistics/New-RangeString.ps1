@@ -1,4 +1,5 @@
 function New-RangeString {
+    [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
@@ -30,6 +31,9 @@ function New-RangeString {
     if ($LeftIndex -lt 0) {
         $LeftIndex = 1
         $LeftIndicator = '<'
+    }
+    if ($LeftIndex -eq 0) {
+        $LeftIndex = 1
     }
     Write-Debug ('[{0}] Width={1} LeftIndex={2} RightIndex={3}' -f $MyInvocation.MyCommand, $Width, $LeftIndex, $RightIndex)
     $line = ' ' * ($LeftIndex - 1) + $LeftIndicator

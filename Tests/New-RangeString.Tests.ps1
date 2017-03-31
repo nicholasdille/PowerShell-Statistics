@@ -17,5 +17,8 @@ Describe 'New-RangeString' {
         It 'Works with identical indexes' {
             New-RangeString -Width 10 -LeftIndex  2 -RightIndex  2 | Should Be ' ||'
         }
+        It 'Works with zero indexes' {
+            New-RangeString -Width 10 -LeftIndex  0 -RightIndex  0 | Should Be '||'
+        }
     }
 }
