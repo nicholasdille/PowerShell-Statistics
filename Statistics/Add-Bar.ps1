@@ -14,23 +14,28 @@
         [Parameter()]
         [ValidateNotNullOrEmpty()]
         [int]
-        $Width = $( if ($Host -and $Host.UI) { $Host.UI.RawUI.MaxWindowSize.Width - 20 } else { 50 } )
+        $Width = $( if ($Host.UI.RawUI.MaxWindowSize.Width) { $Host.UI.RawUI.MaxWindowSize.Width - 20 } else { 50 } )
     )
 
     Begin {
         Write-Verbose ('[{0}] Initializing' -f $MyInvocation.MyCommand)
         
-        $Data = @()
+        $Data = New-Object -TypeName System.Collections.ArrayList
     }
 
     Process {
-        Write-Verbose ('[{0}] Processing {1} items' -f $MyInvocation.MyCommand, $InputObject.Length)
+        if ($InputObject -is [array]) {
+            $Data = $InputObject
 
-        $InputObject | ForEach-Object {
-            if (($_ | Select-Object -ExpandProperty $Property -ErrorAction SilentlyContinue) -eq $null) {
-                throw ('Input object does not contain a property called <{0}>.' -f $Property)
+        } else {
+            Write-Verbose ('[{0}] Processing {1} items' -f $MyInvocation.MyCommand, $InputObject.Length)
+
+            $InputObject | ForEach-Object {
+                if (($_ | Select-Object -ExpandProperty $Property -ErrorAction SilentlyContinue) -eq $null) {
+                    throw ('Input object does not contain a property called <{0}>.' -f $Property)
+                }
+                [void]$Data.Add($_)
             }
-            $Data += $_
         }
     }
 
@@ -40,7 +45,7 @@
         $Count = $Data | Microsoft.PowerShell.Utility\Measure-Object -Maximum -Property $Property | Select-Object -ExpandProperty Maximum
         Write-Debug ('[{0}] Maximum value is {1}. This value will be {2} characters long.' -f $MyInvocation.MyCommand, $Count, $Width)
 
-        $Bars = $Data | ForEach-Object {
+        $Bars = foreach ($_ in $Data) {
             $RelativeCount = [math]::Round($_.$Property / $Count * $Width, 0)
             Write-Debug ('[{0}] Value of {1} will be displayed using {2} characters.' -f $MyInvocation.MyCommand, $_.Property, $RelativeCount)
 

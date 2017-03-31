@@ -13,15 +13,20 @@
     )
     
     Begin {
-        $Data = @()
+        $Data = New-Object -TypeName System.Collections.ArrayList
     }
 
     Process {
-        $InputObject | ForEach-Object {
-            if (-Not ($_.PSObject.Properties | Where-Object Name -ieq $Property)) {
-                throw ('Input object does not contain a property called <{0}>.' -f $Property)
+        if ($InputObject -is [array]) {
+            $Data = $InputObject
+
+        } else {
+            $InputObject | ForEach-Object {
+                if (-Not ($_.PSObject.Properties | Where-Object Name -ieq $Property)) {
+                    throw ('Input object does not contain a property called <{0}>.' -f $Property)
+                }
+                [void]$Data.Add($_)
             }
-            $Data += $_
         }
     }
 
@@ -35,11 +40,11 @@
         #endregion
         
         #region Calculate median
-        Write-Debug ('[{0}] Number of data items is <{1}>' -f $MyInvocation.MyCommand.Name, $Data.Length)
-        if ($Data.Length % 2 -eq 0) {
+        Write-Debug ('[{0}] Number of data items is <{1}>' -f $MyInvocation.MyCommand.Name, $Data.Count)
+        if ($Data.Count % 2 -eq 0) {
             Write-Debug ('[{0}] Even number of data items' -f $MyInvocation.MyCommand.Name)
 
-            $MedianIndex = ($Data.Length / 2) - 1
+            $MedianIndex = ($Data.Count / 2) - 1
             Write-Debug ('[{0}] Index of Median is <{1}>' -f $MyInvocation.MyCommand.Name, $MedianIndex)
             
             $LowerMedian = $Data[$MedianIndex] | Select-Object -ExpandProperty $Property
@@ -52,7 +57,7 @@
         } else {
             Write-Debug ('[{0}] Odd number of data items' -f $MyInvocation.MyCommand.Name)
 
-            $MedianIndex = [math]::Ceiling(($Data.Length - 1) / 2)
+            $MedianIndex = [math]::Ceiling(($Data.Count - 1) / 2)
             Write-Debug ('[{0}] Index of Median is <{1}>' -f $MyInvocation.MyCommand.Name, $MedianIndex)
 
             $Median = $Data[$MedianIndex] | Select-Object -ExpandProperty $Property
@@ -63,17 +68,11 @@
 
         #region Calculate variance
         $Variance = 0
-        $Data | ForEach-Object {
+        foreach ($_ in $Data) {
             $Variance += [math]::Pow($_.$Property - $Stats.Average, 2) / $Stats.Count
         }
         $Variance /= $Stats.Count
         Add-Member -InputObject $Stats -MemberType NoteProperty -Name 'Variance' -Value $Variance
-        #endregion
-
-        #region Calculate Tukey's range for outliers
-        $TukeysOutlier = 1.5
-        $TukeysRange = $TukeysOutlier * ($Stats.Percentile75 - $Stats.Percentile25)
-        Add-Member -InputObject $Stats -MemberType NoteProperty -Name TukeysRange -Value $TukeysRange
         #endregion
 
         #region Calculate standard deviation
@@ -82,14 +81,20 @@
         #endregion
 
         #region Calculate percentiles
-        $Percentile10Index = [math]::Ceiling(10 / 100 * $Data.Length)
-        $Percentile25Index = [math]::Ceiling(25 / 100 * $Data.Length)
-        $Percentile75Index = [math]::Ceiling(75 / 100 * $Data.Length)
-        $Percentile90Index = [math]::Ceiling(90 / 100 * $Data.Length)
+        $Percentile10Index = [math]::Ceiling(10 / 100 * $Data.Count)
+        $Percentile25Index = [math]::Ceiling(25 / 100 * $Data.Count)
+        $Percentile75Index = [math]::Ceiling(75 / 100 * $Data.Count)
+        $Percentile90Index = [math]::Ceiling(90 / 100 * $Data.Count)
         Add-Member -InputObject $Stats -MemberType NoteProperty -Name 'Percentile10' -Value $Data[$Percentile10Index].$Property
         Add-Member -InputObject $Stats -MemberType NoteProperty -Name 'Percentile25' -Value $Data[$Percentile25Index].$Property
         Add-Member -InputObject $Stats -MemberType NoteProperty -Name 'Percentile75' -Value $Data[$Percentile75Index].$Property
         Add-Member -InputObject $Stats -MemberType NoteProperty -Name 'Percentile90' -Value $Data[$Percentile90Index].$Property
+        #endregion
+
+        #region Calculate Tukey's range for outliers
+        $TukeysOutlier = 1.5
+        $TukeysRange = $TukeysOutlier * ($Stats.Percentile75 - $Stats.Percentile25)
+        Add-Member -InputObject $Stats -MemberType NoteProperty -Name TukeysRange -Value $TukeysRange
         #endregion
 
         #region Calculate confidence intervals
