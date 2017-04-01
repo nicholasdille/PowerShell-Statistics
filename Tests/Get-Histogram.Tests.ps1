@@ -23,6 +23,7 @@ Describe 'Get-Histogram' {
     }
     It 'Dies on missing property' {
         $data = 1..10
+        { $data | Get-Histogram -Property Value } | Should Throw
         { Get-Histogram -InputObject $data -Property Value } | Should Throw
     }
 }

@@ -42,8 +42,13 @@
     }
 
     Process {
-        if ($InputObject -is [array]) {
+        if ($InputObject.Length -gt 1) {
             $Data = $InputObject
+            foreach ($_ in $Data) {
+                if (($_ | Select-Object -ExpandProperty $Property -ErrorAction SilentlyContinue) -eq $null) {
+                    throw ('Input object does not contain a property called <{0}>.' -f $Property)
+                }
+            }
 
         } else {
             Write-Verbose ('[{0}] Processing {1} items' -f $MyInvocation.MyCommand, $InputObject.Length)
@@ -61,7 +66,7 @@
     End {
         Write-Verbose ('[{0}] Building histogram' -f $MyInvocation.MyCommand)
 
-        Write-Debug ('[{0}] Retrieving measurements from upstream cmdlet.' -f $MyInvocation.MyCommand)
+        Write-Debug ('[{0}] Retrieving measurements from upstream cmdlet for {1} values' -f $MyInvocation.MyCommand, $Data.Count)
         Write-Progress -Activity 'Measuring data'
         $Stats = $Data | Microsoft.PowerShell.Utility\Measure-Object -Minimum -Maximum -Property $Property
 
