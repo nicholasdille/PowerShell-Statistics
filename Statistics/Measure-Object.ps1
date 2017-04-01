@@ -17,8 +17,13 @@
     }
 
     Process {
-        if ($InputObject -is [array]) {
+        if ($InputObject.Length -gt 1) {
             $Data = $InputObject
+            foreach ($_ in $Data) {
+                if (($_ | Select-Object -ExpandProperty $Property -ErrorAction SilentlyContinue) -eq $null) {
+                    throw ('Input object does not contain a property called <{0}>.' -f $Property)
+                }
+            }
 
         } else {
             $InputObject | ForEach-Object {
