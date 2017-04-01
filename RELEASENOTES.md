@@ -1,3 +1,7 @@
+# 1.1.52
+
+Performance improvements
+
 # 1.1.46
 
 Fix for calculation of variance
