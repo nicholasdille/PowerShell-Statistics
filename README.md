@@ -6,7 +6,6 @@ Statistical analysis
 
 # TODO
 
-- Improve check for pipeline or parameter
 - Display values in `Show-Measurement`... include minimum and maximum
 - Limit displayed range in `Show-Measurement`
 - Check handling of negative values

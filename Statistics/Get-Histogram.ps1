@@ -42,7 +42,7 @@
     }
 
     Process {
-        if ($InputObject.Length -gt 1) {
+        if ($PSBoundParameters.ContainsKey('InputObject')) {
             $Data = $InputObject
             foreach ($_ in $Data) {
                 if (($_ | Select-Object -ExpandProperty $Property -ErrorAction SilentlyContinue) -eq $null) {
