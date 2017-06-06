@@ -1,12 +1,12 @@
 ﻿function Get-Histogram {
     [CmdletBinding(DefaultParameterSetName='BucketCount')]
     Param(
-        [Parameter(Mandatory, ValueFromPipeline, Position=1)]
+        [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [array]
-        $InputObject
+        $Data
         ,
-        [Parameter(Mandatory, Position=2)]
+        [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [string]
         $Property
@@ -34,36 +34,7 @@
         $BucketCount
     )
 
-    Begin {
-        Write-Verbose ('[{0}] Initializing' -f $MyInvocation.MyCommand)
-
-        $Buckets = @{}
-        $Data = New-Object -TypeName System.Collections.ArrayList
-    }
-
     Process {
-        if ($PSBoundParameters.ContainsKey('InputObject')) {
-            $Data = $InputObject
-            foreach ($_ in $Data) {
-                if (($_ | Select-Object -ExpandProperty $Property -ErrorAction SilentlyContinue) -eq $null) {
-                    throw ('Input object does not contain a property called <{0}>.' -f $Property)
-                }
-            }
-
-        } else {
-            Write-Verbose ('[{0}] Processing {1} items' -f $MyInvocation.MyCommand, $InputObject.Length)
-            Write-Progress -Activity 'Collecting data' -Status "Item $($Data.Length)"
-
-            $InputObject | ForEach-Object {
-                if (($_ | Select-Object -ExpandProperty $Property -ErrorAction SilentlyContinue) -eq $null) {
-                    throw ('Input object does not contain a property called <{0}>.' -f $Property)
-                }
-                [void]$Data.Add($_)
-            }
-        }
-    }
-
-    End {
         Write-Verbose ('[{0}] Building histogram' -f $MyInvocation.MyCommand)
 
         Write-Debug ('[{0}] Retrieving measurements from upstream cmdlet for {1} values' -f $MyInvocation.MyCommand, $Data.Count)

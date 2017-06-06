@@ -9,7 +9,8 @@ Describe 'Measure-Group' {
                 Value     = Get-Random -Minimum 0 -Maximum 100
             }
         } | Sort-Object -Property Timestamp
-        $group = $data | Expand-DateTime | Group-Object -Property Hour | Measure-Group -Property Value
+        $data = $data | Expand-DateTime | Group-Object -Property Hour
+        $group = Measure-Group -InputObject $data -Property Value
         { $group | Select-Object -ExpandProperty Average -ErrorAction SilentlyContinue } | Should Not Throw
     }
 }

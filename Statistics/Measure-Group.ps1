@@ -14,7 +14,7 @@ function Measure-Group {
 
     Process {
         $InputObject | ForEach-Object {
-            $Measurement = $_.Group | Measure-Object -Property $Property
+            $Measurement = Measure-Object -InputObject $_.Group -Property $Property
 
             Add-Member -InputObject $Measurement -MemberType NoteProperty -Name Name -Value $_.Name -PassThru
         }

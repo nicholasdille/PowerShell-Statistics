@@ -1,41 +1,18 @@
 ﻿function Measure-Object {
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory, ValueFromPipeline)]
+        [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [array]
-        $InputObject
+        $Data
         ,
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [string]
         $Property
     )
-    
-    Begin {
-        $Data = New-Object -TypeName System.Collections.ArrayList
-    }
 
     Process {
-        if ($PSBoundParameters.ContainsKey('InputObject')) {
-            $Data = $InputObject
-            foreach ($_ in $Data) {
-                if (($_ | Select-Object -ExpandProperty $Property -ErrorAction SilentlyContinue) -eq $null) {
-                    throw ('Input object does not contain a property called <{0}>.' -f $Property)
-                }
-            }
-
-        } else {
-            $InputObject | ForEach-Object {
-                if (-Not ($_.PSObject.Properties | Where-Object Name -ieq $Property)) {
-                    throw ('Input object does not contain a property called <{0}>.' -f $Property)
-                }
-                [void]$Data.Add($_)
-            }
-        }
-    }
-
-    End {
         #region Percentiles require sorted data
         $Data = $Data | Sort-Object -Property $Property
         #endregion
