@@ -35,20 +35,25 @@ if(
         }
     }   
     
-    $GitHubUser = 'nicholasdille'
-    $GitHubRepository = 'PowerShell-Statistics'
-    $NoDraft = $true
-    $Release = $true
-    $RequestBody = @{
-        "tag_name"         = "$Version"
-        "target_commitish" = "$Branch"
-        "name"             = "Version $Version"
-        "body"             = "$Description"
-        "draft"            = -Not $NoDraft
-        "prerelease"       = -Not $Release
-    } | ConvertTo-Json
-    $Result = Invoke-WebRequest -Method Post -Uri "https://api.github.com/repos/$GitHubUser/$GitHubRepository/releases" -Headers @{Authorization = "token $ENV:GitHubToken"} -Body $RequestBody
-    $Result
+    if (Test-Path -Path "$ProjectRoot\ModuleVersion.txt") {
+        $GitHubUser = 'nicholasdille'
+        $GitHubRepository = 'PowerShell-Statistics'
+        $GitHubBranch = 'master'
+        $Version = Get-Content -Path "$ProjectRoot\ModuleVersion.txt"
+        $Description = ''
+        $NoDraft = $true
+        $Release = $true
+        $RequestBody = @{
+            "tag_name"         = "$Version"
+            "target_commitish" = "$GitHubBranch"
+            "name"             = "Version $Version"
+            "body"             = "$Description"
+            "draft"            = -Not $NoDraft
+            "prerelease"       = -Not $Release
+        } | ConvertTo-Json
+        $Result = Invoke-WebRequest -Method Post -Uri "https://api.github.com/repos/$GitHubUser/$GitHubRepository/releases" -Headers @{Authorization = "token $ENV:GitHubToken"} -Body $RequestBody
+        $Result
+    }
 }
 else
 {

@@ -80,9 +80,13 @@ Task Build -Depends Test,Docs {
     $scriptBlock.CheckRestrictedLanguage($allowedCommands, $allowedVariables, $true)
     $manifest = & $scriptBlock
 
+    $ModuleVersion = $manifest.ModuleVersion
     If($ENV:BHBuildSystem -eq 'AppVeyor') {
-        Update-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -Value "$($manifest.ModuleVersion).$env:APPVEYOR_BUILD_NUMBER" -ErrorAction stop
+        Update-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -Value "$ModuleVersion.$env:APPVEYOR_BUILD_NUMBER" -ErrorAction stop
+        $ModuleVersion = "$ModuleVersion.$env:APPVEYOR_BUILD_NUMBER"
     }
+
+    Set-Content -Path "$ProjectRoot\ModuleVersion.txt" -Value $ModuleVersion
 }
 
 Task Deploy -Depends Build {
