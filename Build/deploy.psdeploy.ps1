@@ -33,33 +33,46 @@ if(
                 ApiKey = $ENV:NugetApiKey
             }
         }
-    }   
-    
-    if (Test-Path -Path "$ProjectRoot\ModuleVersion.txt") {
-        $GitHubUser = 'nicholasdille'
-        $GitHubRepository = 'PowerShell-Statistics'
-        $GitHubBranch = 'master'
-        $Version = Get-Content -Path "$ProjectRoot\ModuleVersion.txt"
-        $Description = ''
-        $NoDraft = $true
-        $Release = $true
-        $RequestBody = @{
-            "tag_name"         = "$Version"
-            "target_commitish" = "$GitHubBranch"
-            "name"             = "Version $Version"
-            "body"             = "$Description"
-            "draft"            = -Not $NoDraft
-            "prerelease"       = -Not $Release
-        } | ConvertTo-Json
-        $Result = Invoke-WebRequest -Method Post -Uri "https://api.github.com/repos/$GitHubUser/$GitHubRepository/releases" -Headers @{Authorization = "token $ENV:GitHubToken"} -Body $RequestBody
-        $Result
     }
 }
 else
 {
-    "Skipping deployment: To deploy, ensure that...`n" +
+    "Skipping deployment to PSGallery: To deploy, ensure that...`n" +
     "`t* You are in a known build system (Current: $ENV:BHBuildSystem)`n" +
     "`t* You are committing to the master branch (Current: $ENV:BHBranchName) `n" +
+    "`t* Your commit message includes !deploy (Current: $ENV:BHCommitMessage)" |
+        Write-Host
+}
+
+# Create GitHub release
+if(
+    $env:BHModulePath -and
+    $env:BHCommitMessage -match '!deploy' -and
+    (Test-Path -Path ".\ModuleVersion.txt")
+)
+{
+    $GitHubUser = 'nicholasdille'
+    $GitHubRepository = 'PowerShell-Statistics'
+    $GitHubBranch = $env:BHBranchName
+    $Version = Get-Content -Path ".\ModuleVersion.txt"
+    $Description = ''
+    $NoDraft = $true
+    $Release = $true
+    $RequestBody = @{
+        "tag_name"         = "$Version"
+        "target_commitish" = "$GitHubBranch"
+        "name"             = "Version $Version"
+        "body"             = "$Description"
+        "draft"            = -Not $NoDraft
+        "prerelease"       = -Not $Release
+    } | ConvertTo-Json
+    $Result = Invoke-WebRequest -Method Post -Uri "https://api.github.com/repos/$GitHubUser/$GitHubRepository/releases" -Headers @{Authorization = "token $ENV:GitHubToken"} -Body $RequestBody
+    $Result
+}
+else
+{
+    "Skipping deployment on GitHub: To deploy, ensure that...`n" +
+    "`t* .\ModuleVersion.txt exists"
     "`t* Your commit message includes !deploy (Current: $ENV:BHCommitMessage)" |
         Write-Host
 }

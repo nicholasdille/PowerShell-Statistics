@@ -1,4 +1,4 @@
-# 1.1.61
+# 1.1.64
 
 - Improved check for data via parameter or pipeline
 - Added automatic creation of GitHub release
