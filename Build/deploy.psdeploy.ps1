@@ -25,6 +25,7 @@ if(
     $env:BHCommitMessage -match '!deploy'
 )
 {
+    'PSGallery'
     Deploy Module {
         By PSGalleryModule {
             FromSource $ENV:BHModulePath
@@ -35,7 +36,7 @@ if(
         }
     }   
     
-    Write-Output 'GitHub release'
+    'GitHub release'
     $NoDraft = $true
     $Release = $true
     $RequestBody = @{

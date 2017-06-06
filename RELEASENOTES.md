@@ -1,11 +1,11 @@
-# 1.1.58
+# 1.1.59
 
-Improved check for data via parameter or pipeline
-Added automatic creation of GitHub release
-Fixed variable name due to upstream change (BHPSModulePath --> BHModulePath)
-Fixed type casting (GitHub issue #1)
+- Improved check for data via parameter or pipeline
+- Added automatic creation of GitHub release
+- Fixed variable name due to upstream change (BHPSModulePath --> BHModulePath)
+- Fixed type casting (GitHub issue #1)
 
-# 1.1.52
+# 1.1.53
 
 Performance improvements
 
