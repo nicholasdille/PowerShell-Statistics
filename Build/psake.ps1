@@ -38,7 +38,7 @@ Task Test -Depends Init  {
     if ($env:PSModulePath -notlike "$ProjectRoot;*") {
         $env:PSModulePath = "$ProjectRoot;$env:PSModulePath"
     }
-    $TestResults = Invoke-Pester -Path $ProjectRoot\Tests -PassThru -OutputFormat NUnitXml -OutputFile "$ProjectRoot\$TestFile" -CodeCoverage "$env:BHPSModulePath\$env:BHProjectName.psm1"
+    $TestResults = Invoke-Pester -Path $ProjectRoot\Tests -PassThru -OutputFormat NUnitXml -OutputFile "$ProjectRoot\$TestFile" -CodeCoverage "$env:BHModulePath\$env:BHProjectName.psm1"
 
     # In Appveyor?  Upload our tests! #Abstract this into a function?
     If($ENV:BHBuildSystem -eq 'AppVeyor')
@@ -62,7 +62,7 @@ Task Test -Depends Init  {
 Task Docs {
     $lines
 
-    New-ExternalHelp -Path $ProjectRoot\docs -OutputPath $env:BHPSModulePath\en-US -Force
+    New-ExternalHelp -Path $ProjectRoot\docs -OutputPath $env:BHModulePath\en-US -Force
 }
 
 Task Build -Depends Test,Docs {
