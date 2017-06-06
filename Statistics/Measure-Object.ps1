@@ -33,7 +33,7 @@
             $UpperMedian = $Data[$MedianIndex + 1] | Select-Object -ExpandProperty $Property
             Write-Debug ('[{0}] Lower Median is <{1}> and upper Median is <{2}>' -f $MyInvocation.MyCommand.Name, $LowerMedian, $UpperMedian)
             
-            $Median = ($LowerMedian + $UpperMedian) / 2
+            $Median = ([double]$LowerMedian + [double]$UpperMedian) / 2
             Write-Debug ('[{0}] Average of lower and upper Median is <{1}>' -f $MyInvocation.MyCommand.Name, $Median)
 
         } else {
