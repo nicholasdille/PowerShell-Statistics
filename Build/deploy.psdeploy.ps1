@@ -25,7 +25,6 @@ if(
     $env:BHCommitMessage -match '!deploy'
 )
 {
-    'PSGallery'
     Deploy Module {
         By PSGalleryModule {
             FromSource $ENV:BHModulePath
@@ -36,7 +35,8 @@ if(
         }
     }   
     
-    'GitHub release'
+    $GitHubUser = 'nicholasdille'
+    $GitHubRepository = 'PowerShell-Statistics'
     $NoDraft = $true
     $Release = $true
     $RequestBody = @{
@@ -47,7 +47,8 @@ if(
         "draft"            = -Not $NoDraft
         "prerelease"       = -Not $Release
     } | ConvertTo-Json
-    $Result = Invoke-WebRequest -Method Post -Uri "https://api.github.com/repos/$Owner/$Repository/releases" -Headers @{Authorization = "token $ENV:GitHubToken"} -Body $RequestBody
+    $Result = Invoke-WebRequest -Method Post -Uri "https://api.github.com/repos/$GitHubUser/$GitHubRepository/releases" -Headers @{Authorization = "token $ENV:GitHubToken"} -Body $RequestBody
+    $Result
 }
 else
 {
