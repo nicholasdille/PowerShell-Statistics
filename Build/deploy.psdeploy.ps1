@@ -34,6 +34,16 @@ if(
             }
         }
     }   
+    
+    $RequestBody = @{
+        "tag_name"         = "$Version"
+        "target_commitish" = "$Branch"
+        "name"             = "Version $Version"
+        "body"             = "$Description"
+        "draft"            = -Not $NoDraft
+        "prerelease"       = -Not $Release
+    } | ConvertTo-Json
+    $Result = Invoke-WebRequest -Method Post -Uri "https://api.github.com/repos/$Owner/$Repository/releases" -Headers @{Authorization = "token $ENV:GitHubToken"} -Body $RequestBody
 }
 else
 {
