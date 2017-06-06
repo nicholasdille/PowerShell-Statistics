@@ -35,6 +35,9 @@ if(
         }
     }   
     
+    Write-Output 'GitHub release'
+    $NoDraft = $true
+    $Release = $true
     $RequestBody = @{
         "tag_name"         = "$Version"
         "target_commitish" = "$Branch"
