@@ -63,7 +63,6 @@ Accept wildcard characters: False
 
 ### Microsoft.PowerShell.Commands.GroupInfo[]
 
-
 ## OUTPUTS
 
 ### System.Object

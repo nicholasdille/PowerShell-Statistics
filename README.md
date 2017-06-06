@@ -6,6 +6,7 @@ Statistical analysis
 
 # TODO
 
+- Use `Update-TypeData`
 - Display values in `Show-Measurement`... include minimum and maximum
 - Limit displayed range in `Show-Measurement`
 - Check handling of negative values

@@ -78,7 +78,6 @@ Accept wildcard characters: False
 
 ### System.Array
 
-
 ## OUTPUTS
 
 ### System.Object

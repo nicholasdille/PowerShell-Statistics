@@ -12,7 +12,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-ConvertFrom-PerformanceCounter [-InputObject] <PerformanceCounterSampleSet> [[-Instance] <String>]
+ConvertFrom-PerformanceCounter [-InputObject] <Array> [-Instance] <String>
 ```
 
 ## DESCRIPTION
@@ -33,7 +33,7 @@ Get-counter -Counter "\Processor(_Total)\% Processor Time" -SampleInterval 2 -Ma
 {{Fill InputObject Description}}
 
 ```yaml
-Type: PerformanceCounterSampleSet
+Type: Array
 Parameter Sets: (All)
 Aliases: 
 
@@ -52,7 +52,7 @@ Type: String
 Parameter Sets: (All)
 Aliases: 
 
-Required: False
+Required: True
 Position: 1
 Default value: None
 Accept pipeline input: False
@@ -61,8 +61,7 @@ Accept wildcard characters: False
 
 ## INPUTS
 
-### Microsoft.PowerShell.Commands.GetCounter.PerformanceCounterSampleSet
-
+### System.Array
 
 ## OUTPUTS
 

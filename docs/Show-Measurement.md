@@ -12,11 +12,12 @@ Visualizes statistical data about input values
 ## SYNTAX
 
 ```
-Show-Measurement [-InputObject] <Object> [[-Width] <Int32>]
+Show-Measurement [-InputObject] <Object> [[-Width] <Int32>] [-PassThru]
 ```
 
 ## DESCRIPTION
-Show-Measurement relies on the overload of Measure-Object provided by this module. It visualizes the data calculated by Measure-Object on the console.
+Show-Measurement relies on the overload of Measure-Object provided by this module.
+It visualizes the data calculated by Measure-Object on the console.
 
 ## EXAMPLES
 
@@ -66,10 +67,24 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -PassThru
+{{Fill PassThru Description}}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## INPUTS
 
 ### System.Object
-
 
 ## OUTPUTS
 

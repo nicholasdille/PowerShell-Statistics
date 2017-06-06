@@ -32,7 +32,6 @@ Expand-DateTime [-InputObject] <Array> [[-Property] <String>]
 } | Expand-DateTime -Property Timestamp
 ```
 
-
 {{ Add example description here }}
 
 ## PARAMETERS
@@ -70,7 +69,6 @@ Accept wildcard characters: False
 ## INPUTS
 
 ### System.Array
-
 
 ## OUTPUTS
 

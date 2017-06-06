@@ -12,7 +12,7 @@ Visualizes values using bars
 ## SYNTAX
 
 ```
-Add-Bar [-InputObject] <Array> [-Property] <String> [[-Width] <Int32>]
+Add-Bar [-InputObject] <Array> [[-Property] <String>] [[-Width] <Int32>]
 ```
 
 ## DESCRIPTION
@@ -26,18 +26,18 @@ Add-Bar adds a new member to the input objects which contain bars to visualize t
 Add-Bar -InputObject $Files -Property Length
 ```
 
-Index lowerBound upperBound Count Bar                                               
------ ---------- ---------- ----- ---                                               
-    1          0    5242880    13 #####################                             
-    2    5242880   10485760    31 ##################################################
-    3   10485760   15728640    24 #######################################           
-    4   15728640   20971520    14 #######################                           
-    5   20971520   26214400     5 ########                                          
-    6   26214400   31457280     5 ########                                          
-    7   31457280   36700160     3 #####                                             
-    8   36700160   41943040     2 ###                                               
-    9   41943040   47185920     3 #####                                             
-   10   47185920   52428800     1 ##
+Index lowerBound upperBound Count Bar
+----- ---------- ---------- ----- ---
+1          0    5242880    13 #####################
+2    5242880   10485760    31 ##################################################
+3   10485760   15728640    24 #######################################
+4   15728640   20971520    14 #######################
+5   20971520   26214400     5 ########
+6   26214400   31457280     5 ########
+7   31457280   36700160     3 #####
+8   36700160   41943040     2 ###
+9   41943040   47185920     3 #####
+10   47185920   52428800     1 ##
 
 ### -------------------------- EXAMPLE 2 --------------------------
 ```
@@ -69,7 +69,7 @@ Type: String
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
+Required: False
 Position: 2
 Default value: None
 Accept pipeline input: False
