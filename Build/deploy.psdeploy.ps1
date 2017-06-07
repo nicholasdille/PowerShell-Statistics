@@ -66,8 +66,7 @@ if(
         "draft"            = -Not $NoDraft
         "prerelease"       = -Not $Release
     } | ConvertTo-Json
-    $Result = Invoke-WebRequest -Method Post -Uri "https://api.github.com/repos/$GitHubUser/$GitHubRepository/releases" -Headers @{Authorization = "token $ENV:GitHubToken"} -Body $RequestBody
-    $Result
+    Invoke-WebRequest -Method Post -Uri "https://api.github.com/repos/$GitHubUser/$GitHubRepository/releases" -Headers @{Authorization = "token $ENV:GitHubToken"} -Body $RequestBody
 }
 else
 {
