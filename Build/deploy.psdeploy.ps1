@@ -45,7 +45,7 @@ else
 }
 
 # Create GitHub release
-if(
+<#if(
     $env:BHModulePath -and
     $env:BHCommitMessage -match '!deploy' -and
     (Test-Path -Path ".\ModuleVersion.txt")
@@ -74,7 +74,7 @@ else
     "`t* .\ModuleVersion.txt exists"
     "`t* Your commit message includes !deploy (Current: $ENV:BHCommitMessage)" |
         Write-Host
-}
+}#>
 
 # Publish to AppVeyor if we're in AppVeyor
 if(
