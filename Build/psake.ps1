@@ -34,6 +34,12 @@ Task Test -Depends Init  {
     $lines
     "`n`tSTATUS: Testing with PowerShell $PSVersion"
 
+    # PSScriptAnalyzer
+    if ($issues = Invoke-ScriptAnalyzer -Path $env:BHModulePath -Severity Warning) {
+        $issues | Format-Table
+        Write-Error "Failed analysis:"
+    }
+
     # Gather test results. Store them in a variable and file
     if ($env:PSModulePath -notlike "$ProjectRoot;*") {
         $env:PSModulePath = "$ProjectRoot;$env:PSModulePath"
