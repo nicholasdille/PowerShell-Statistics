@@ -2,16 +2,22 @@
     $Task = 'Default'
 )
 
-# dependencies
+# Install dependencies
 Get-PackageProvider -Name NuGet -ForceBootstrap | Out-Null
-if(-not (Get-Module -ListAvailable PSDepend))
-{
-    & (Resolve-Path "$PSScriptRoot\helpers\Install-PSDepend.ps1")
+@('psake', 'PSDeploy', 'BuildHelpers', 'Pester', 'platyps') | ForEach-Object {
+    if (-Not (Get-Module -ListAvailable -Name $_)) {
+        Install-Module -Name $_ -Scope CurrentUser -Force
+    }
 }
-Import-Module PSDepend
-$null = Invoke-PSDepend -Path "$PSScriptRoot\build.requirements.psd1" -Install -Import -Force
 
-Set-BuildEnvironment
+# Prepare build environment
+$BHVariables = Get-BuildVariables
+$env:BHBuildSystem   = $BHVariables.BuildSystem
+$env:BHProjectPath   = $BHVariables.ProjectPath
+$env:BHBranchName    = $BHVariables.BranchName
+$env:BHCommitMessage = $BHVariables.CommitMessage
+$env:BHBuildNumber   = $BHVariables.BuildNumber
 
+# Invoke psake and handle return value
 Invoke-psake $PSScriptRoot\psake.ps1 -taskList $Task -nologo
 exit ( [int]( -not $psake.build_success ) )
