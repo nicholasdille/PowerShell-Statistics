@@ -24,7 +24,7 @@ function Get-SlidingAverage {
 
     Process {
         $InputObject | ForEach-Object {
-            if (Get-Member -InputObject $_ -MemberType Properties -Name $Property) {
+            if (-Not (Get-Member -InputObject $_ -MemberType Properties -Name $Property)) {
                 throw ('[{0}] Unable to find property <{1}> in input object' -f $MyInvocation.MyCommand, $Property)
             }
 

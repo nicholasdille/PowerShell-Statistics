@@ -16,7 +16,7 @@ function Expand-DateTime {
         Write-Debug ('[{0}] Entering process block' -f $MyInvocation.MyCommand)
         $InputObject | ForEach-Object {
             Write-Debug 'inside foreach'
-            if (Get-Member -InputObject $_ -MemberType Properties -Name $Property) {
+            if (-Not (Get-Member -InputObject $_ -MemberType Properties -Name $Property)) {
                 throw ('[{0}] Unable to find property <{1}> in input object' -f $MyInvocation.MyCommand, $Property)
             }
 
