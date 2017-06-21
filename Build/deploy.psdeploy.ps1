@@ -1,5 +1,5 @@
 ﻿# Publish to gallery with a few restrictions
-if(
+if (
     $env:BHModulePath -and
     $env:BHBuildSystem -ne 'Unknown' -and
     $env:BHBranchName -eq "master" -and
@@ -26,7 +26,7 @@ else
 }
 
 # Create GitHub release
-if(
+if (
     $env:BHModulePath -and
     $env:BHBuildSystem -eq 'AppVeyor' -and
     $env:APPVEYOR_REPO_PROVIDER -eq 'gitHub' -and
@@ -107,7 +107,7 @@ else
 }
 
 # Publish to AppVeyor if we're in AppVeyor
-if(
+if (
     $env:BHModulePath -and
     $env:BHBuildSystem -eq 'AppVeyor'
    )

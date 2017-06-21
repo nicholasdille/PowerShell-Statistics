@@ -40,7 +40,7 @@ Task Test -Depends Init  {
     $TestResults = Invoke-Pester -Path "$env:BHProjectPath\Tests" -PassThru -OutputFormat NUnitXml -OutputFile "$env:BHProjectPath\$TestFile" -CodeCoverage "$env:BHModulePath\$ModuleName.psm1"
 
     # In Appveyor?  Upload our tests! #Abstract this into a function?
-    If($env:BHBuildSystem -eq 'AppVeyor') {
+    if ($env:BHBuildSystem -eq 'AppVeyor') {
         (New-Object 'System.Net.WebClient').UploadFile(
             "https://ci.appveyor.com/api/testresults/nunit/$env:APPVEYOR_JOB_ID",
             "$env:BHProjectPath\$TestFile" )
@@ -49,7 +49,7 @@ Task Test -Depends Init  {
 
     # Failed tests?
     # Need to tell psake or it will proceed to the deployment. Danger!
-    if($TestResults.FailedCount -gt 0) {
+    if ($TestResults.FailedCount -gt 0) {
         Write-Error "Failed '$($TestResults.FailedCount)' tests, build failed"
     }
 
@@ -69,7 +69,7 @@ Task Docs {
 Task Build -Depends Test,Docs {
     $lines
 
-    If($env:BHBuildSystem -eq 'AppVeyor') {
+    if ($env:BHBuildSystem -eq 'AppVeyor') {
         Update-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -Value "$($Manifest.ModuleVersion).$env:APPVEYOR_BUILD_NUMBER" -ErrorAction stop
         $env:ModuleVersion = "$($Manifest.ModuleVersion).$env:APPVEYOR_BUILD_NUMBER"
     }
