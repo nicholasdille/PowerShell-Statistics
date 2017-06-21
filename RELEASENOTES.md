@@ -1,3 +1,8 @@
+# 1.1.105
+
+- Integrated updated scripts from PowerShell-CI
+- Fixed test for property
+
 # 1.1.64
 
 - Improved check for data via parameter or pipeline
