@@ -34,7 +34,7 @@ if (
 )
 {
     Compress-Archive -Path $env:BHModulePath -DestinationPath $env:BHProjectPath\$env:BHProjectName-$env:ModuleVersion.zip
-    if (-Not (Test-Path -Path $env:BHProjectPath\$env:BHProjectName-$env:ModuleVersion.zip)) {
+    if (-Not (Test-Path -Path $env:BHProjectPath\$ModuleName-$env:ModuleVersion.zip)) {
         Write-Error 'Failed to create archive for release'
     }
     "Created release asset $env:BHProjectPath\$env:BHProjectName-$env:ModuleVersion.zip" |
