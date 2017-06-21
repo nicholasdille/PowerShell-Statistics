@@ -1,7 +1,8 @@
-# 1.1.109
+# 1.1.111
 
 - Integrated updated scripts from PowerShell-CI
 - Fixed test for property
+- Added link to PSGallery in GitHub release
 
 # 1.1.64
 
