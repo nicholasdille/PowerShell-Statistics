@@ -27,7 +27,7 @@
         if ($PSBoundParameters.ContainsKey('InputObject')) {
             $Data = $InputObject
             foreach ($_ in $Data) {
-                if (($_ | Select-Object -ExpandProperty $Property -ErrorAction SilentlyContinue) -eq $null) {
+                if (Get-Member -InputObject $_ -MemberType Properties -Name $Property) {
                     throw ('Input object does not contain a property called <{0}>.' -f $Property)
                 }
             }
@@ -36,7 +36,7 @@
             Write-Verbose ('[{0}] Processing {1} items' -f $MyInvocation.MyCommand, $InputObject.Length)
 
             $InputObject | ForEach-Object {
-                if (($_ | Select-Object -ExpandProperty $Property -ErrorAction SilentlyContinue) -eq $null) {
+                if (Get-Member -InputObject $_ -MemberType Properties -Name $Property) {
                     throw ('Input object does not contain a property called <{0}>.' -f $Property)
                 }
                 [void]$Data.Add($_)
