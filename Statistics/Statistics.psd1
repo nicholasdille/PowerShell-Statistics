@@ -7,22 +7,10 @@
     Copyright = '(c) 2017 Nicholas Dille. All rights reserved.'
     Description = 'Statistical analysis of data in the console window. For example this module can generate a histogram (Get-Histogram) and visualize it (Add-Bar). It also provides several statistical properties of the input data (Measure-Object and Show-Measurement). Using Get-SlidingAverage, data can be analyzed in a pipeline in real-time.'
     PowerShellVersion = '5.0'
-    FunctionsToExport = @(
-        'Measure-Object'
-        'ConvertFrom-PrimitiveType'
-        'ConvertFrom-PerformanceCounter'
-        'Expand-DateTime'
-        'Get-Histogram'
-        'Measure-Group'
-        'Get-InterarrivalTime'
-        'Get-SlidingAverage'
-        'Get-WeightedValue'
-        'Add-Bar'
-        'Show-Measurement'
-    )
+    FunctionsToExport = @('Add-Bar','ConvertFrom-PerformanceCounter','ConvertFrom-PrimitiveType','Expand-DateTime','Get-Histogram','Get-InterarrivalTime','Get-SlidingAverage','Get-WeightedValue','Measure-Group','Measure-Object','Show-Measurement')
     CmdletsToExport = ''
     VariablesToExport = ''
-    AliasesToExport = '*'
+    AliasesToExport = @('ab','cfpc','cfpt','edt','gh','giat','gsa','gwv','mg','mo','sm')
     FormatsToProcess = @(
         'HistogramBucket.Format.ps1xml'
         'HistogramBar.Format.ps1xml'
