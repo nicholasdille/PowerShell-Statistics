@@ -56,6 +56,7 @@ if (
                 $_
             }
         }
+        $ReleaseNotesSection += "See https://www.powershellgallery.com/packages/$ModuleName/$env:ModuleVersion"
         $ReleaseNotesSection = $ReleaseNotesSection | Where-Object { $_ -notlike '# *' -and $_ -ne '' }
         if ($ReleaseNotesSection -is [array]) {
             $ReleaseNotes = $ReleaseNotesSection -join "`n"
