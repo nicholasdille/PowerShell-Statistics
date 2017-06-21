@@ -12,7 +12,7 @@
     }
     $ModuleName = $PSModule.Directory.BaseName
     $env:BHModulePath = $PSModule.Directory.FullName
-    $TestFile = "TestResults_$ModuleName_PS$PSVersion`_$TimeStamp.xml"
+    $TestFile = "TestResults_PS$PSVersion`_$TimeStamp.xml"
     Import-LocalizedData -BindingVariable Manifest -BaseDirectory $PSModule.Directory.FullName -FileName $PSModule.Name
     $env:ModuleVersion = $Manifest.ModuleVersion
 }
@@ -37,7 +37,7 @@ Task Test -Depends Init  {
     if ($env:PSModulePath -notlike "$env:BHProjectPath;*") {
         $env:PSModulePath = "$env:BHProjectPath;$env:PSModulePath"
     }
-    $TestResults = Invoke-Pester -Path "$env:BHProjectPath\Tests" -PassThru -OutputFormat NUnitXml -OutputFile "$env:BHProjectPath\$TestFile" -CodeCoverage "$env:BHProjectPath\$ModuleName.psm1"
+    $TestResults = Invoke-Pester -Path "$env:BHProjectPath\Tests" -PassThru -OutputFormat NUnitXml -OutputFile "$env:BHProjectPath\$TestFile" -CodeCoverage "$env:BHModulePath\$ModuleName.psm1"
 
     # In Appveyor?  Upload our tests! #Abstract this into a function?
     If($env:BHBuildSystem -eq 'AppVeyor') {
