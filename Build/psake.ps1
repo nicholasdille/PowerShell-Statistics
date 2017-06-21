@@ -70,7 +70,7 @@ Task Build -Depends Test,Docs {
     $lines
 
     if ($env:BHBuildSystem -eq 'AppVeyor') {
-        Update-Metadata -Path $env:BHModulePath\$($env:ModuleName).psd1 -PropertyName ModuleVersion -Value "$($Manifest.ModuleVersion).$env:APPVEYOR_BUILD_NUMBER" -ErrorAction stop
+        Update-Metadata -Path $PSModule.FullName -PropertyName ModuleVersion -Value "$($Manifest.ModuleVersion).$env:APPVEYOR_BUILD_NUMBER" -ErrorAction stop
         $env:ModuleVersion = "$($Manifest.ModuleVersion).$env:APPVEYOR_BUILD_NUMBER"
     }
 
