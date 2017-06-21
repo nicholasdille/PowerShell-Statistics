@@ -33,11 +33,11 @@ if (
     $env:BHCommitMessage -match '!release'
 )
 {
-    Compress-Archive -Path $env:BHModulePath -DestinationPath $env:BHProjectPath\$ModuleName-$env:ModuleVersion.zip
-    if (-Not (Test-Path -Path $env:BHProjectPath\$ModuleName-$env:ModuleVersion.zip)) {
+    Compress-Archive -Path $env:BHModulePath -DestinationPath $env:BHProjectPath\$env:ModuleName-$env:ModuleVersion.zip
+    if (-Not (Test-Path -Path $env:BHProjectPath\$env:ModuleName-$env:ModuleVersion.zip)) {
         Write-Error 'Failed to create archive for release'
     }
-    "Created release asset $env:BHProjectPath\$ModuleName-$env:ModuleVersion.zip" |
+    "Created release asset $env:BHProjectPath\$env:ModuleName-$env:ModuleVersion.zip" |
         Write-Host
 
     $ReleaseNotes = 'PLEASE FILL MANUALLY'
@@ -56,7 +56,7 @@ if (
                 $_
             }
         }
-        $ReleaseNotesSection += "See https://www.powershellgallery.com/packages/$ModuleName/$env:ModuleVersion"
+        $ReleaseNotesSection += "See https://www.powershellgallery.com/packages/$env:ModuleName/$env:ModuleVersion"
         $ReleaseNotesSection = $ReleaseNotesSection | Where-Object { $_ -notlike '# *' -and $_ -ne '' }
         if ($ReleaseNotesSection -is [array]) {
             $ReleaseNotes = $ReleaseNotesSection -join "`n"

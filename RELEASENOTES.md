@@ -1,4 +1,4 @@
-# 1.1.111
+# 1.1.112
 
 - Integrated updated scripts from PowerShell-CI
 - Fixed test for property

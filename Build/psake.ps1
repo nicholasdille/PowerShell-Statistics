@@ -10,7 +10,7 @@
     if (-Not $PSModule) {
         Write-Error 'Did not find any module manifest'
     }
-    $ModuleName = $PSModule.Directory.BaseName
+    $env:ModuleName = $PSModule.Directory.BaseName
     $env:BHModulePath = $PSModule.Directory.FullName
     $TestFile = "TestResults_PS$PSVersion`_$TimeStamp.xml"
     Import-LocalizedData -BindingVariable Manifest -BaseDirectory $PSModule.Directory.FullName -FileName $PSModule.Name
@@ -37,7 +37,7 @@ Task Test -Depends Init  {
     if ($env:PSModulePath -notlike "$env:BHProjectPath;*") {
         $env:PSModulePath = "$env:BHProjectPath;$env:PSModulePath"
     }
-    $TestResults = Invoke-Pester -Path "$env:BHProjectPath\Tests" -PassThru -OutputFormat NUnitXml -OutputFile "$env:BHProjectPath\$TestFile" -CodeCoverage "$env:BHModulePath\$ModuleName.psm1"
+    $TestResults = Invoke-Pester -Path "$env:BHProjectPath\Tests" -PassThru -OutputFormat NUnitXml -OutputFile "$env:BHProjectPath\$TestFile" -CodeCoverage "$env:BHModulePath\$env:ModuleName.psm1"
 
     # In Appveyor?  Upload our tests! #Abstract this into a function?
     if ($env:BHBuildSystem -eq 'AppVeyor') {
