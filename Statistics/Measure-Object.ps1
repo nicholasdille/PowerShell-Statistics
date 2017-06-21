@@ -86,7 +86,7 @@
             '98' = 2.326
             '99' = 2.576
         }
-        $Confidence95 = 1.96 * $Stats.StandardDeviation / [math]::Sqrt($Stats.Count)
+        $Confidence95 = $z.95 * $Stats.StandardDeviation / [math]::Sqrt($Stats.Count)
         Add-Member -InputObject $Stats -MemberType NoteProperty -Name 'Confidence95' -Value $Confidence95
         #endregion
 
