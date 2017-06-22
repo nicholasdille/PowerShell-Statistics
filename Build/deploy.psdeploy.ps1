@@ -33,12 +33,13 @@ if (
     $env:BHCommitMessage -match '!release'
 )
 {
-    $ReleaseAsset = "$env:BHProjectPath\$env:ModuleName-$env:ModuleVersion.zip"
-    Compress-Archive -Path $env:BHModulePath -DestinationPath $ReleaseAsset
-    if (-Not (Test-Path -Path $ReleaseAsset)) {
+    $AssetName = "$env:ModuleName-$env:ModuleVersion.zip"
+    $AssetPath = "$env:BHProjectPath\$AssetName"
+    Compress-Archive -Path $env:BHModulePath -DestinationPath $AssetPath
+    if (-Not (Test-Path -Path $AssetPath)) {
         Write-Error 'Failed to create archive for release'
     }
-    "Created release asset $ReleaseAsset" |
+    "Created release asset $AssetPath" |
         Write-Host
 
     $ReleaseNotes = 'PLEASE FILL MANUALLY'
@@ -96,8 +97,8 @@ if (
 
     "Uploading asset to GitHub release" |
         Write-Host
-    $RequestBody = Get-Content -Path $ReleaseAsset -Raw
-    $Result = Invoke-WebRequest -Method Post -Uri "https://uploads.github.com/repos/$ENV:APPVEYOR_REPO_NAME/releases/$GitHubReleaseId/assets?name=$env:BHProjectName-$env:ModuleVersion.zip" -Headers @{Authorization = "token $ENV:GitHubToken"} -ContentType 'application/zip' -Body $RequestBody
+    $RequestBody = Get-Content -Path $AssetPath -Raw
+    $Result = Invoke-WebRequest -Method Post -Uri "https://uploads.github.com/repos/$ENV:APPVEYOR_REPO_NAME/releases/$GitHubReleaseId/assets?name=$AssetName" -Headers @{Authorization = "token $ENV:GitHubToken"} -ContentType 'application/zip' -Body $RequestBody
     if ($Result.StatusCode -ne 201) {
         Write-Error "Failed to upload release asset. Code $($Result.StatusCode): $($Result.Content)"
     }
