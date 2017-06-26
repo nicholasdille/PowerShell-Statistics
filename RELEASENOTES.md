@@ -1,10 +1,15 @@
-# 1.1.115
+# 1.1.119
 
 - Integrated updated scripts from PowerShell-CI
 - Fixed test for property
 - Added link to PSGallery in GitHub release
 - Fixed markdown spacing in release notes
 - Fixed naming of release asset
+- Enhanced code coverage metrics
+- Fixed project directory
+- Fixed performance monitor counter names
+- Fixed behaviour without network connectivity
+- Testing documentation
 
 # 1.1.64
 
