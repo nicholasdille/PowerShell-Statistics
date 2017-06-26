@@ -5,7 +5,7 @@
 
     $PSModule = Get-ChildItem -Path $env:BHProjectPath -File -Recurse -Filter '*.psd1' | Where-Object { $_.Directory.Name -eq $_.BaseName }
     if ($PSModule -is [array]) {
-        Write-Error 'Found more than one module manifest'
+        Write-Error ('Found more than one module manifest: {0}' -f ($PSModule -join ', '))
     }
     if (-Not $PSModule) {
         Write-Error 'Did not find any module manifest'
@@ -33,11 +33,14 @@ Task Test -Depends Init  {
     $lines
     "`n`tSTATUS: Testing with PowerShell $PSVersion"
 
+    Remove-Module -Name pester
+    Import-Module -Name pester -MinimumVersion '4.0.0'
+
     # Gather test results. Store them in a variable and file
     if ($env:PSModulePath -notlike "$env:BHProjectPath;*") {
         $env:PSModulePath = "$env:BHProjectPath;$env:PSModulePath"
     }
-    $TestResults = Invoke-Pester -Path "$env:BHProjectPath\Tests" -PassThru -OutputFormat NUnitXml -OutputFile "$env:BHProjectPath\$TestFile" -CodeCoverage "$env:BHModulePath\$env:ModuleName.psm1"
+    $TestResults = Invoke-Pester -Path "$env:BHProjectPath\Tests" -OutputFormat NUnitXml -OutputFile "$env:BHProjectPath\$TestFile" -CodeCoverage "$env:BHModulePath\*.ps1" -PassThru
 
     # In Appveyor?  Upload our tests! #Abstract this into a function?
     if ($env:BHBuildSystem -eq 'AppVeyor') {
@@ -47,10 +50,66 @@ Task Test -Depends Init  {
     }
     #Remove-Item "$env:BHProjectPath\$TestFile" -Force -ErrorAction SilentlyContinue
 
-    # Failed tests?
-    # Need to tell psake or it will proceed to the deployment. Danger!
+    $CodeCoverage = @{
+        Functions = @{}
+        Line = @{
+            Analyzed = $TestResults.CodeCoverage.NumberOfCommandsAnalyzed
+            Executed = $TestResults.CodeCoverage.NumberOfCommandsExecuted
+            Missed   = $TestResults.CodeCoverage.NumberOfCommandsMissed
+            Coverage = 0
+        }
+        Function = @{}
+    }
+    $CodeCoverage.Line.Coverage = [math]::Round($CodeCoverage.Line.Executed / $CodeCoverage.Line.Analyzed * 100, 2)
+    $TestResults.CodeCoverage.HitCommands | Group-Object -Property Function | ForEach-Object {
+        if (-Not $CodeCoverage.Functions.ContainsKey($_.Name)) {
+            $CodeCoverage.Functions.Add($_.Name, @{
+                Name     = $_.Name
+                Analyzed = 0
+                Executed = 0
+                Missed   = 0
+                Coverage = 0
+            })
+        }
+
+        $CodeCoverage.Functions[$_.Name].Analyzed += $_.Count
+        $CodeCoverage.Functions[$_.Name].Executed += $_.Count
+    }
+    $TestResults.CodeCoverage.MissedCommands | Group-Object -Property Function | ForEach-Object {
+        if (-Not $CodeCoverage.Functions.ContainsKey($_.Name)) {
+            $CodeCoverage.Functions.Add($_.Name, @{
+                Name     = $_.Name
+                Analyzed = 0
+                Executed = 0
+                Missed   = 0
+                Coverage = 0
+            })
+        }
+
+        $CodeCoverage.Functions[$_.Name].Analyzed += $_.Count
+        $CodeCoverage.Functions[$_.Name].Missed   += $_.Count
+    }
+    foreach ($function in $CodeCoverage.Functions.Values) {
+        $function.Coverage = [math]::Round($function.Executed / $function.Analyzed * 100)
+    }
+    $CodeCoverage.Function = @{
+        Analyzed = $CodeCoverage.Functions.Count
+        Executed = ($CodeCoverage.Functions.Values | Where-Object { $_.Executed -gt 0 }).Length
+        Missed   = ($CodeCoverage.Functions.Values | Where-Object { $_.Executed -eq 0 }).Length
+    }
+    $CodeCoverage.Function.Coverage = [math]::Round($CodeCoverage.Function.Executed / $CodeCoverage.Function.Analyzed * 100, 2)
+ 
+    "Line coverage: $($CodeCoverage.Line.Analyzed) analyzed, $($CodeCoverage.Line.Executed) executed, $($CodeCoverage.Line.Missed) missed, $($CodeCoverage.Line.Coverage)%."
+    "Function coverage: $($CodeCoverage.Function.Analyzed) analyzed, $($CodeCoverage.Function.Executed) executed, $($CodeCoverage.Function.Missed) missed, $($CodeCoverage.Function.Coverage)%."
+
     if ($TestResults.FailedCount -gt 0) {
         Write-Error "Failed '$($TestResults.FailedCount)' tests, build failed"
+    }
+    if ($CodeCoverage.Line.Coverage -lt 75) {
+        Write-Error "Failed line coverage below 75% ($($CodeCoverage.Line.Coverage)%)"
+    }
+    if ($CodeCoverage.Function.Coverage -lt 100) {
+        Write-Error "Failed function coverage is not 100% ($($CodeCoverage.Function.Coverage)%)"
     }
 
     "`n"
