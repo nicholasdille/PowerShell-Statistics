@@ -105,8 +105,8 @@ Task Test -Depends Init  {
     if ($TestResults.FailedCount -gt 0) {
         Write-Error "Failed '$($TestResults.FailedCount)' tests, build failed"
     }
-    if ($CodeCoverage.Line.Coverage -lt 75) {
-        Write-Error "Failed line coverage below 75% ($($CodeCoverage.Line.Coverage)%)"
+    if ($CodeCoverage.Line.Coverage -lt 80) {
+        Write-Error "Failed line coverage below 80% ($($CodeCoverage.Line.Coverage)%)"
     }
     if ($CodeCoverage.Function.Coverage -lt 100) {
         Write-Error "Failed function coverage is not 100% ($($CodeCoverage.Function.Coverage)%)"
