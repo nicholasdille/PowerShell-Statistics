@@ -1,10 +1,12 @@
 Import-Module -Name Statistics -Force
 
 Describe 'Show-Measurement' {
-    #$stats = 0..10 | ConvertFrom-PrimitiveType | Measure-Object -Property Value
-    #It 'Produces output' {
-    #    Mock Write-Host {}
-    #    $stats | Show-Measurement
-    #    Assert-MockCalled Write-Host -Scope It -Times 1 -Exactly
-    #}
+    $data = 0..10 | ConvertFrom-PrimitiveType
+    $stats = Measure-Object -Data $data -Property Value
+    It 'Produces output' {
+        #Mock Write-Output {}
+        $output = Show-Measurement -InputObject $stats
+        #Assert-MockCalled Write-Output -Scope It -Times 1 -Exactly
+        $output.Length -gt 0 | Should Be $true
+    }
 }
