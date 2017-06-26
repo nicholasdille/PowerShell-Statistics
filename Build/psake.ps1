@@ -119,13 +119,13 @@ Task Docs {
     $lines
 
     $TestResults = Invoke-Pester -Path $env:BHProjectPath\docs\docs.Tests.ps1 -PassThru
-    
+
     if ($TestResults.FailedCount -gt 0) {
         Write-Error "Failed '$($TestResults.FailedCount)' documentation tests. Failed!"
     }
 
     Get-ChildItem -Path $env:BHProjectPath\docs -Directory | Select-Object -ExpandProperty Name | ForEach-Object {
-        New-ExternalHelp -Path $env:BHProjectPath\docs\$_ -OutputPath $env:BHProjectPath\$_ -Force | Out-Null
+        New-ExternalHelp -Path $env:BHProjectPath\docs\$_ -OutputPath $env:BHModulePath\$_ -Force | Out-Null
     }
 
     "`n"
