@@ -1,3 +1,6 @@
 Statistics/en-US/*.xml
 *.zip
 *.clixml
+TestResults*.xml
+dev/*
+data/*
