@@ -3,7 +3,7 @@
 )
 
 # Check connectivity
-if (Get-NetAdapter | Where-Object Status -ieq 'Connected') {
+if (Get-NetAdapter | Where-Object Status -ieq 'Up') {
     # Install dependencies
     Get-PackageProvider -Name NuGet -ForceBootstrap | Out-Null
     @('psake', 'PSDeploy', 'BuildHelpers', 'Pester', 'platyps') | ForEach-Object {
@@ -11,6 +11,9 @@ if (Get-NetAdapter | Where-Object Status -ieq 'Connected') {
             Install-Module -Name $_ -Scope CurrentUser -Force
         }
     }
+
+} else {
+    Write-Warning 'No network connectivity. Unable to install/update module dependencies.'
 }
 
 # Prepare build environment
