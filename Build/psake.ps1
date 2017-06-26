@@ -103,13 +103,13 @@ Task Test -Depends Init  {
     "Function coverage: $($CodeCoverage.Function.Analyzed) analyzed, $($CodeCoverage.Function.Executed) executed, $($CodeCoverage.Function.Missed) missed, $($CodeCoverage.Function.Coverage)%."
 
     if ($TestResults.FailedCount -gt 0) {
-        Write-Error "Failed '$($TestResults.FailedCount)' tests, build failed"
+        Write-Error "Failed '$($TestResults.FailedCount)' tests. Build failed!"
     }
     if ($CodeCoverage.Line.Coverage -lt 80) {
-        Write-Error "Failed line coverage below 80% ($($CodeCoverage.Line.Coverage)%)"
+        Write-Error "Failed line coverage below 80% ($($CodeCoverage.Line.Coverage)%). Build failed!"
     }
     if ($CodeCoverage.Function.Coverage -lt 100) {
-        Write-Error "Failed function coverage is not 100% ($($CodeCoverage.Function.Coverage)%)"
+        Write-Error "Failed function coverage is not 100% ($($CodeCoverage.Function.Coverage)%). Build failed!"
     }
 
     "`n"
@@ -118,8 +118,14 @@ Task Test -Depends Init  {
 Task Docs {
     $lines
 
+    $TestResults = Invoke-Pester -Path $env:BHProjectPath\docs\docs.Tests.ps1 -PassThru
+    
+    if ($TestResults.FailedCount -gt 0) {
+        Write-Error "Failed '$($TestResults.FailedCount)' documentation tests. Failed!"
+    }
+
     Get-ChildItem -Path $env:BHProjectPath\docs -Directory | Select-Object -ExpandProperty Name | ForEach-Object {
-        New-ExternalHelp -Path $env:BHProjectPath\docs\$_ -OutputPath $env:BHProjectPath\$_ -Force
+        New-ExternalHelp -Path $env:BHProjectPath\docs\$_ -OutputPath $env:BHProjectPath\$_ -Force | Out-Null
     }
 
     "`n"
