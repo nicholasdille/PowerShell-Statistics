@@ -10,6 +10,7 @@
 - Fixed performance monitor counter names
 - Fixed behaviour without network connectivity
 - Testing documentation
+- Fixed output directory of documentation
 
 # 1.1.64
 
