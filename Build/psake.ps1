@@ -33,7 +33,7 @@ Task Test -Depends Init  {
     $lines
     "`n`tSTATUS: Testing with PowerShell $PSVersion"
 
-    Remove-Module -Name pester
+    Remove-Module -Name pester -ErrorAction SilentlyContinue
     Import-Module -Name pester -MinimumVersion '4.0.0'
 
     # Gather test results. Store them in a variable and file
