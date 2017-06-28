@@ -29,7 +29,24 @@ Task Init {
     "`n"
 }
 
-Task Test -Depends Init  {
+Task Analysis -Depends Init {
+    $lines
+
+    $results = Invoke-ScriptAnalyzer -Path $env:BHModulePath -Recurse -Severity Warning
+    if ($results) {
+        $results
+        Write-Error 'Failed script analysis. Build failed.'
+    }
+    $results = Invoke-ScriptAnalyzer -Path $env:BHModulePath -Recurse -SuppressedOnly
+    if ($results) {
+        $results
+        Write-Warning 'Some issues are suppressed from script analysis.'
+    }
+
+    "`n"
+}
+
+Task Test -Depends Init,Analysis  {
     $lines
     "`n`tSTATUS: Testing with PowerShell $PSVersion"
 
@@ -131,7 +148,7 @@ Task Docs {
     "`n"
 }
 
-Task Build -Depends Test,Docs {
+Task Build -Depends Analysis,Test,Docs {
     $lines
 
     if ($env:BHBuildSystem -eq 'AppVeyor') {
