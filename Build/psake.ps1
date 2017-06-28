@@ -32,12 +32,13 @@ Task Init {
 Task Analysis -Depends Init {
     $lines
 
-    $results = Invoke-ScriptAnalyzer -Path $env:BHModulePath -Recurse -Severity Warning
+    $Files = Get-ChildItem -Path .\Statistics\*.ps1 -File
+    $results = $Files | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ -Severity Warning }
     if ($results) {
         $results
         Write-Error 'Failed script analysis. Build failed.'
     }
-    $results = Invoke-ScriptAnalyzer -Path $env:BHModulePath -Recurse -SuppressedOnly
+    $results = $Files | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ -SuppressedOnly }
     if ($results) {
         $results
         Write-Warning 'Some issues are suppressed from script analysis.'
