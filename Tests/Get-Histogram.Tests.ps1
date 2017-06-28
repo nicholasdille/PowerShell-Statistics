@@ -1,4 +1,6 @@
-Import-Module -Name Statistics -Force
+Get-ChildItem -Path "$env:BHModulePath" -Filter '*.ps1' -File | ForEach-Object {
+    . "$($_.FullName)"
+}
 
 Describe 'Get-Histogram' {
     $data = 1..10 | ConvertFrom-PrimitiveType
@@ -15,5 +17,16 @@ Describe 'Get-Histogram' {
         $histogram = Get-Histogram -Data $data -Property Value -Minimum 2 -Maximum 5
         $histogram | Select-Object -First 1 -ExpandProperty lowerBound | Should Be 2
         $histogram | Select-Object -Last  1 -ExpandProperty upperBound | Should Be 5
+    }
+    It 'Warns for large number of buckets' {
+        $data = 1..110 | ConvertFrom-PrimitiveType
+        Mock Write-Warning {}
+        Get-Histogram -Data $data -Property Value
+        Assert-MockCalled -CommandName Write-Warning -Times 1 -Exactly
+    }
+    It 'Produces empty histogram' {
+        $data = 1..10 + 20..30 | ConvertFrom-PrimitiveType
+        $histogram = Get-Histogram -Data $data -Property Value -Minimum 11 -Maximum 19
+        $histogram
     }
 }

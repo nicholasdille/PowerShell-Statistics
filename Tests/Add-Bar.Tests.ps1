@@ -1,4 +1,6 @@
-Import-Module -Name Statistics -Force
+Get-ChildItem -Path "$env:BHModulePath" -Filter '*.ps1' -File | ForEach-Object {
+    . "$($_.FullName)"
+}
 
 Describe 'Add-Bar' {
     It 'Produces bars from parameter' {
@@ -15,7 +17,7 @@ Describe 'Add-Bar' {
             $_.PSObject.Properties | Where-Object Name -eq 'Bar' | Select-Object -ExpandProperty Name | Should Be 'Bar'
         }
     }
-    It 'Produces output type [HistogramBucket]' {
+    It 'Produces correct output type' {
         $item = Get-Process | Add-Bar -Property WorkingSet64 -Width 50 | Select-Object -First 1
         $item.PSTypeNames -contains 'HistogramBar' | Should Be $true
     }
@@ -27,5 +29,7 @@ Describe 'Add-Bar' {
     It 'Dies on missing property' {
         $data = 1..10
         { Add-Bar -InputObject $data -Property Value } | Should Throw
+        $data = 11..20
+        { $data | Add-Bar -Property Value } | Should Throw
     }
 }

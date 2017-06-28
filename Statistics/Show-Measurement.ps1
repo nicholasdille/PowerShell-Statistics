@@ -50,7 +50,7 @@
         if ($PassThru) {
             $InputObject
         }
-        Write-Output ($graph -join "`n")
+        Write-Host ($graph -join "`n")
         #endregion
     }
 }

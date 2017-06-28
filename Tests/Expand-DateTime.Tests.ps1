@@ -1,4 +1,6 @@
-Import-Module -Name Statistics -Force
+Get-ChildItem -Path "$env:BHModulePath" -Filter '*.ps1' -File | ForEach-Object {
+    . "$($_.FullName)"
+}
 
 Describe 'Expand-DateTime' {
     switch ([CultureInfo]::InstalledUICulture) {
@@ -23,5 +25,8 @@ Describe 'Expand-DateTime' {
         { $data | Select-Object -ExpandProperty Year      -ErrorAction SilentlyContinue } | Should Not Throw
         { $data | Select-Object -ExpandProperty Month     -ErrorAction SilentlyContinue } | Should Not Throw
         { $data | Select-Object -ExpandProperty Hour      -ErrorAction SilentlyContinue } | Should Not Throw
+    }
+    It 'Throws on missing property' {
+        { Get-Counter -Counter $Counter | Expand-DateTime -Property Timestamp2 } | Should Throw
     }
 }

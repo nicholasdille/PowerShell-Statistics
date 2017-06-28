@@ -1,4 +1,6 @@
-Import-Module -Name Statistics -Force
+Get-ChildItem -Path "$env:BHModulePath" -Filter '*.ps1' -File | ForEach-Object {
+    . "$($_.FullName)"
+}
 
 Describe 'ConvertFrom-PrimitiveType' {
     $array = @(1, 2, 3)

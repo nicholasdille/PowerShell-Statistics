@@ -20,11 +20,12 @@
     Begin {
         Write-Verbose ('[{0}] Initializing' -f $MyInvocation.MyCommand)
         
+        $ValueFromParameter = $PSBoundParameters.ContainsKey('InputObject')
         $Data = New-Object -TypeName System.Collections.ArrayList
     }
 
     Process {
-        if ($PSBoundParameters.ContainsKey('InputObject')) {
+        if ($ValueFromParameter) {
             $Data = $InputObject
             foreach ($_ in $Data) {
                 if (-Not (Get-Member -InputObject $_ -MemberType Properties -Name $Property)) {
