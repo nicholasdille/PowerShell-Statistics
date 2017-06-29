@@ -70,7 +70,7 @@ Task Test -Depends Init,Analysis  {
 
     $CodeCoverage = @{
         Functions = @{}
-        Line = @{
+        Statement = @{
             Analyzed = $TestResults.CodeCoverage.NumberOfCommandsAnalyzed
             Executed = $TestResults.CodeCoverage.NumberOfCommandsExecuted
             Missed   = $TestResults.CodeCoverage.NumberOfCommandsMissed
@@ -78,7 +78,7 @@ Task Test -Depends Init,Analysis  {
         }
         Function = @{}
     }
-    $CodeCoverage.Line.Coverage = [math]::Round($CodeCoverage.Line.Executed / $CodeCoverage.Line.Analyzed * 100, 2)
+    $CodeCoverage.Statement.Coverage = [math]::Round($CodeCoverage.Statement.Executed / $CodeCoverage.Statement.Analyzed * 100, 2)
     $TestResults.CodeCoverage.HitCommands | Group-Object -Property Function | ForEach-Object {
         if (-Not $CodeCoverage.Functions.ContainsKey($_.Name)) {
             $CodeCoverage.Functions.Add($_.Name, @{
@@ -117,14 +117,14 @@ Task Test -Depends Init,Analysis  {
     }
     $CodeCoverage.Function.Coverage = [math]::Round($CodeCoverage.Function.Executed / $CodeCoverage.Function.Analyzed * 100, 2)
  
-    "Line coverage: $($CodeCoverage.Line.Analyzed) analyzed, $($CodeCoverage.Line.Executed) executed, $($CodeCoverage.Line.Missed) missed, $($CodeCoverage.Line.Coverage)%."
+    "Statement coverage: $($CodeCoverage.Statement.Analyzed) analyzed, $($CodeCoverage.Statement.Executed) executed, $($CodeCoverage.Statement.Missed) missed, $($CodeCoverage.Statement.Coverage)%."
     "Function coverage: $($CodeCoverage.Function.Analyzed) analyzed, $($CodeCoverage.Function.Executed) executed, $($CodeCoverage.Function.Missed) missed, $($CodeCoverage.Function.Coverage)%."
 
     if ($TestResults.FailedCount -gt 0) {
         Write-Error "Failed '$($TestResults.FailedCount)' tests. Build failed!"
     }
-    if ($CodeCoverage.Line.Coverage -lt 80) {
-        Write-Error "Failed line coverage below 80% ($($CodeCoverage.Line.Coverage)%). Build failed!"
+    if ($CodeCoverage.Statement.Coverage -lt 80) {
+        Write-Error "Failed statement coverage below 80% ($($CodeCoverage.Statement.Coverage)%). Build failed!"
     }
     if ($CodeCoverage.Function.Coverage -lt 100) {
         Write-Error "Failed function coverage is not 100% ($($CodeCoverage.Function.Coverage)%). Build failed!"
