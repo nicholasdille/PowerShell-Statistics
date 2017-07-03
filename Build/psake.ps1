@@ -68,54 +68,7 @@ Task Test -Depends Init,Analysis  {
     }
     #Remove-Item "$env:BHProjectPath\$TestFile" -Force -ErrorAction SilentlyContinue
 
-    $CodeCoverage = @{
-        Functions = @{}
-        Statement = @{
-            Analyzed = $TestResults.CodeCoverage.NumberOfCommandsAnalyzed
-            Executed = $TestResults.CodeCoverage.NumberOfCommandsExecuted
-            Missed   = $TestResults.CodeCoverage.NumberOfCommandsMissed
-            Coverage = 0
-        }
-        Function = @{}
-    }
-    $CodeCoverage.Statement.Coverage = [math]::Round($CodeCoverage.Statement.Executed / $CodeCoverage.Statement.Analyzed * 100, 2)
-    $TestResults.CodeCoverage.HitCommands | Group-Object -Property Function | ForEach-Object {
-        if (-Not $CodeCoverage.Functions.ContainsKey($_.Name)) {
-            $CodeCoverage.Functions.Add($_.Name, @{
-                Name     = $_.Name
-                Analyzed = 0
-                Executed = 0
-                Missed   = 0
-                Coverage = 0
-            })
-        }
-
-        $CodeCoverage.Functions[$_.Name].Analyzed += $_.Count
-        $CodeCoverage.Functions[$_.Name].Executed += $_.Count
-    }
-    $TestResults.CodeCoverage.MissedCommands | Group-Object -Property Function | ForEach-Object {
-        if (-Not $CodeCoverage.Functions.ContainsKey($_.Name)) {
-            $CodeCoverage.Functions.Add($_.Name, @{
-                Name     = $_.Name
-                Analyzed = 0
-                Executed = 0
-                Missed   = 0
-                Coverage = 0
-            })
-        }
-
-        $CodeCoverage.Functions[$_.Name].Analyzed += $_.Count
-        $CodeCoverage.Functions[$_.Name].Missed   += $_.Count
-    }
-    foreach ($function in $CodeCoverage.Functions.Values) {
-        $function.Coverage = [math]::Round($function.Executed / $function.Analyzed * 100)
-    }
-    $CodeCoverage.Function = @{
-        Analyzed = $CodeCoverage.Functions.Count
-        Executed = ($CodeCoverage.Functions.Values | Where-Object { $_.Executed -gt 0 }).Length
-        Missed   = ($CodeCoverage.Functions.Values | Where-Object { $_.Executed -eq 0 }).Length
-    }
-    $CodeCoverage.Function.Coverage = [math]::Round($CodeCoverage.Function.Executed / $CodeCoverage.Function.Analyzed * 100, 2)
+    $CodeCoverage = Get-CodeCoverageMetrics -CodeCoverage $TestResults.CodeCoverage
  
     "Statement coverage: $($CodeCoverage.Statement.Analyzed) analyzed, $($CodeCoverage.Statement.Executed) executed, $($CodeCoverage.Statement.Missed) missed, $($CodeCoverage.Statement.Coverage)%."
     "Function coverage: $($CodeCoverage.Function.Analyzed) analyzed, $($CodeCoverage.Function.Executed) executed, $($CodeCoverage.Function.Missed) missed, $($CodeCoverage.Function.Coverage)%."
@@ -123,10 +76,10 @@ Task Test -Depends Init,Analysis  {
     if ($TestResults.FailedCount -gt 0) {
         Write-Error "Failed '$($TestResults.FailedCount)' tests. Build failed!"
     }
-    if ($CodeCoverage.Statement.Coverage -lt 80) {
+    if ($CodeCoverage.Statement.Coverage -lt $env:StatementCoverageThreshold) {
         Write-Error "Failed statement coverage below 80% ($($CodeCoverage.Statement.Coverage)%). Build failed!"
     }
-    if ($CodeCoverage.Function.Coverage -lt 100) {
+    if ($CodeCoverage.Function.Coverage -lt $env:FunctionCoverageThreshold) {
         Write-Error "Failed function coverage is not 100% ($($CodeCoverage.Function.Coverage)%). Build failed!"
     }
 

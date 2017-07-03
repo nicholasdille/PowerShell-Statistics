@@ -15,6 +15,20 @@
         'HistogramBucket.Format.ps1xml'
         'HistogramBar.Format.ps1xml'
     )
+    RequiredModules = @(
+        @{
+            ModuleName = 'CICD'
+            ModuleVersion = '0.1.22'
+        },
+        @{
+            ModuleName = 'PSCoverage'
+            ModuleVersion = '0.1.39'
+        },
+        @{
+            ModuleName = 'PSGitHub'
+            ModuleVersion = '0.13.9'
+        }
+    )
     PrivateData = @{
         PSData = @{
             Tags = @(
