@@ -1,6 +1,6 @@
 ﻿| AppVeyor | Coveralls | Download |
 | :------: | :-------: | :------: |
-| [![Build status](https://ci.appveyor.com/api/projects/status/e56ra8c3q1jtc19o?svg=true)](https://ci.appveyor.com/project/nicholasdille/powershell-statistics) | [![Coverage Status](https://coveralls.io/repos/github/nicholasdille/PowerShell-Statistics/badge.svg?branch=)](https://coveralls.io/github/nicholasdille/PowerShell-Statistics?branch=) | [![Download](https://img.shields.io/badge/powershellgallery-Statistics-blue.svg)](https://www.powershellgallery.com/packages/Statistics/)
+| [![Build status](https://ci.appveyor.com/api/projects/status/e56ra8c3q1jtc19o?svg=true)](https://ci.appveyor.com/project/nicholasdille/powershell-statistics) | [![Coverage Status](https://coveralls.io/repos/github/nicholasdille/PowerShell-Statistics/badge.svg?branch=master)](https://coveralls.io/github/nicholasdille/PowerShell-Statistics?branch=master) | [![Download](https://img.shields.io/badge/powershellgallery-Statistics-blue.svg)](https://www.powershellgallery.com/packages/Statistics/)
 
 # Introduction
 
@@ -226,3 +226,7 @@ Timestamp           Value DayOfWeek Year Month Hour WeekOfYear
 29.03.2017 05:11:43    55 Wednesday 2017     3    5 13
 29.03.2017 09:10:39    77 Wednesday 2017     3    9 13
 ```
+
+# Credits
+
+Build scripts based on [PSDeploy](https://github.com/RamblingCookieMonster/PSDeploy) by [Warren Frame](http://ramblingcookiemonster.github.io/)
