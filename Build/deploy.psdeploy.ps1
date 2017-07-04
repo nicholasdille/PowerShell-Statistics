@@ -85,7 +85,7 @@ if (
 
     "Uploading asset to GitHub release" |
         Write-Host
-    New-GitHubReleaseAsset -Owner nicholasdille -Repository PowerShell-Statistics -Token $env:GitHubToken -Release $GitHubReleaseId -Path $AssetPath
+    $GitHubAssetId = New-GitHubReleaseAsset -Owner nicholasdille -Repository PowerShell-Statistics -Token $env:GitHubToken -Release $GitHubReleaseId -Path $AssetPath
 }
 else
 {
