@@ -81,27 +81,11 @@ if (
 
     "Creating release in GitHub repository" |
         Write-Host
-    $RequestBody = ConvertTo-Json -InputObject @{
-        "tag_name"         = "$env:ModuleVersion"
-        "target_commitish" = "$env:BHBranchName"
-        "name"             = "Version $env:ModuleVersion"
-        "body"             = "$ReleaseNotes"
-        "draft"            = $false
-        "prerelease"       = $false
-    }
-    $Result = Invoke-WebRequest -Method Post -Uri "https://api.github.com/repos/$ENV:APPVEYOR_REPO_NAME/releases" -Headers @{Authorization = "token $ENV:GitHubToken"} -Body $RequestBody
-    if ($Result.StatusCode -ne 201) {
-        Write-Error "Failed to create release. Code $($Result.StatusCode): $($Result.Content)"
-    }
-    $GitHubReleaseId = ($Result.Content | ConvertFrom-Json).id
+    $GitHubReleaseId = New-GitHubRelease -Owner nicholasdille -Repository PowerShell-Statistics -Token $env:GitHubToken -Name $env:ModuleVersion -Branch $env:BHBranchName -Body $ReleaseNotes
 
     "Uploading asset to GitHub release" |
         Write-Host
-    $RequestBody = Get-Content -Path $AssetPath -Raw
-    $Result = Invoke-WebRequest -Method Post -Uri "https://uploads.github.com/repos/$ENV:APPVEYOR_REPO_NAME/releases/$GitHubReleaseId/assets?name=$AssetName" -Headers @{Authorization = "token $ENV:GitHubToken"} -ContentType 'application/zip' -Body $RequestBody
-    if ($Result.StatusCode -ne 201) {
-        Write-Error "Failed to upload release asset. Code $($Result.StatusCode): $($Result.Content)"
-    }
+    New-GitHubReleaseAsset -Owner nicholasdille -Repository PowerShell-Statistics -Token $env:GitHubToken -Release $GitHubReleaseId -Path $AssetPath
 }
 else
 {

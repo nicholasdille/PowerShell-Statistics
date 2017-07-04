@@ -32,7 +32,12 @@ Task Init {
 Task Analysis -Depends Init {
     $lines
 
-    $Files = Get-ChildItem -Path .\Statistics\*.ps1 -File
+    if ($env:SkipScriptAnalysis) {
+        Write-Warning 'Skipping script analysis by user request (SkipScriptAnalysis environment variable).'
+        return
+    }
+
+    $Files = Get-ChildItem -Path "$env:BHModulePath\*.ps1" -File
     $results = $Files | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ -Severity Warning }
     if ($results) {
         $results
@@ -49,6 +54,12 @@ Task Analysis -Depends Init {
 
 Task Test -Depends Init,Analysis  {
     $lines
+
+    if ($env:SkipUnitTests) {
+        Write-Warning 'Skipping unit tests by user request (SkipUnitTests environment variable).'
+        return
+    }
+
     "`n`tSTATUS: Testing with PowerShell $PSVersion"
 
     Remove-Module -Name pester -ErrorAction SilentlyContinue
@@ -68,7 +79,7 @@ Task Test -Depends Init,Analysis  {
     }
     #Remove-Item "$env:BHProjectPath\$TestFile" -Force -ErrorAction SilentlyContinue
 
-    $CodeCoverage = Get-CodeCoverageMetrics -CodeCoverage $TestResults.CodeCoverage
+    $CodeCoverage = Get-CodeCoverageMetric -CodeCoverage $TestResults.CodeCoverage
  
     "Statement coverage: $($CodeCoverage.Statement.Analyzed) analyzed, $($CodeCoverage.Statement.Executed) executed, $($CodeCoverage.Statement.Missed) missed, $($CodeCoverage.Statement.Coverage)%."
     "Function coverage: $($CodeCoverage.Function.Analyzed) analyzed, $($CodeCoverage.Function.Executed) executed, $($CodeCoverage.Function.Missed) missed, $($CodeCoverage.Function.Coverage)%."
@@ -88,6 +99,11 @@ Task Test -Depends Init,Analysis  {
 
 Task Docs {
     $lines
+
+    if ($env:SkipDocumentation) {
+        Write-Warning 'Skipping generation of documentation by user request (SkipDocumentation environment variable).'
+        return
+    }
 
     $TestResults = Invoke-Pester -Path $env:BHProjectPath\docs\docs.Tests.ps1 -PassThru
 
