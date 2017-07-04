@@ -15,6 +15,7 @@
         'HistogramBucket.Format.ps1xml'
         'HistogramBar.Format.ps1xml'
     )
+    <# RequiredModules is not working correctly
     RequiredModules = @(
         @{
             ModuleName = 'CICD'
@@ -29,6 +30,7 @@
             ModuleVersion = '0.13.9'
         }
     )
+    #>
     PrivateData = @{
         PSData = @{
             Tags = @(
