@@ -84,6 +84,10 @@ Task Test -Depends Init,Analysis  {
     "Statement coverage: $($CodeCoverage.Statement.Analyzed) analyzed, $($CodeCoverage.Statement.Executed) executed, $($CodeCoverage.Statement.Missed) missed, $($CodeCoverage.Statement.Coverage)%."
     "Function coverage: $($CodeCoverage.Function.Analyzed) analyzed, $($CodeCoverage.Function.Executed) executed, $($CodeCoverage.Function.Missed) missed, $($CodeCoverage.Function.Coverage)%."
 
+    $CoverageReport = New-CoverageReportFromPester -CodeCoverage $TestResults.CodeCoverage -Path $env:BHProjectPath
+    $CoverageReport.repo_token = $env:CoverallsToken
+    Publish-CoverageReport -CoverageReport $CoverageReport
+
     if ($TestResults.FailedCount -gt 0) {
         Write-Error "Failed '$($TestResults.FailedCount)' tests. Build failed!"
     }
