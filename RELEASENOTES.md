@@ -1,3 +1,8 @@
+# 1.1.131
+
+- Added behaviour to skip build steps
+- Relying on the module CICD
+
 # 1.1.123
 
 - Integrated updated scripts from PowerShell-CI
