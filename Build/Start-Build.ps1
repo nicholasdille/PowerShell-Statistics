@@ -24,6 +24,13 @@ $env:BHBranchName    = $BHVariables.BranchName
 $env:BHCommitMessage = $BHVariables.CommitMessage
 $env:BHBuildNumber   = $BHVariables.BuildNumber
 
+$env:GitHubOwner = git config -l | Where-Object { $_ -like 'remote.origin.url=*' } | ForEach-Object {
+    if ( $_ -match '^https://github.com/([^/]+)/([^/]+)(.git)?$' ) {
+        $env:GitHubOwner = $Matches[1]
+        $env:GitHubRepo = $Matches[2]
+    }
+}
+
 # Invoke psake and handle return value
 Invoke-psake $PSScriptRoot\psake.ps1 -taskList $Task -nologo
 exit ( [int]( -not $psake.build_success ) )
