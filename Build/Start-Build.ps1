@@ -24,7 +24,7 @@ $env:BHBranchName    = $BHVariables.BranchName
 $env:BHCommitMessage = $BHVariables.CommitMessage
 $env:BHBuildNumber   = $BHVariables.BuildNumber
 
-$env:GitHubOwner = git config -l | Where-Object { $_ -like 'remote.origin.url=*' } | ForEach-Object {
+& git config -l | Where-Object { $_ -like 'remote.origin.url=*' } | ForEach-Object {
     if ( $_ -match '^https://github.com/([^/]+)/([^/]+)(.git)?$' ) {
         $env:GitHubOwner = $Matches[1]
         $env:GitHubRepo = $Matches[2]
