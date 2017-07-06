@@ -1,7 +1,8 @@
-# 1.1.133
+# 1.1.135
 
 - Added behaviour to skip build steps
 - Relying on the module CICD
+- Fixed behaviour in CICD module
 
 # 1.1.123
 
