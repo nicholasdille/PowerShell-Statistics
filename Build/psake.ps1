@@ -92,12 +92,12 @@ Task Test -Depends Init,Analysis  {
     $CoverageReport.git = @{
         head = @{
             id = $env:APPVEYOR_REPO_COMMIT
-            authorname = $env:APPVEYOR_REPO_COMMIT_AUTHOR
-            authoremail = $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL
-            comittername = $env:APPVEYOR_REPO_COMMIT_AUTHOR
-            comitteremail = $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL
+            #authorname = $env:APPVEYOR_REPO_COMMIT_AUTHOR
+            #authoremail = $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL
+            #comittername = $env:APPVEYOR_REPO_COMMIT_AUTHOR
+            #comitteremail = $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL
         }
-        message = $env:APPVEYOR_REPO_COMMIT_MESSAGE
+        #message = $env:APPVEYOR_REPO_COMMIT_MESSAGE
         branch = $env:APPVEYOR_REPO_BRANCH
     }
     Publish-CoverageReport -CoverageReport $CoverageReport
