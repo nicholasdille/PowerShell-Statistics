@@ -79,6 +79,7 @@ Task Test -Depends Init,Analysis  {
     }
     #Remove-Item "$env:BHProjectPath\$TestFile" -Force -ErrorAction SilentlyContinue
 
+    $TestResults.CodeCoverage | ConvertTo-Json -Depth 5 | Set-Content -Path "$env:BHProjectPath\CodeCoverage_PS$PSVersion`_$TimeStamp.json"
     $CodeCoverage = Get-CodeCoverageMetric -CodeCoverage $TestResults.CodeCoverage
  
     "Statement coverage: $($CodeCoverage.Statement.Analyzed) analyzed, $($CodeCoverage.Statement.Executed) executed, $($CodeCoverage.Statement.Missed) missed, $($CodeCoverage.Statement.Coverage)%."
@@ -86,6 +87,19 @@ Task Test -Depends Init,Analysis  {
 
     $CoverageReport = New-CoverageReportFromPester -CodeCoverage $TestResults.CodeCoverage -Path $env:BHProjectPath
     $CoverageReport.repo_token = $env:CoverallsToken
+    $CoverageReport.service_name = 'AppVeyor'
+    $CoverageReport.service_job_id = $env:APPVEYOR_JOB_ID
+    $CoverageReport.git = @{
+        head = @{
+            id = $env:APPVEYOR_REPO_COMMIT
+            authorname = $env:APPVEYOR_REPO_COMMIT_AUTHOR
+            authoremail = $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL
+            comittername = $env:APPVEYOR_REPO_COMMIT_AUTHOR
+            comitteremail = $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL
+        }
+        message = $env:APPVEYOR_REPO_COMMIT_MESSAGE
+        branch = $env:APPVEYOR_REPO_BRANCH
+    }
     Publish-CoverageReport -CoverageReport $CoverageReport
 
     if ($TestResults.FailedCount -gt 0) {
