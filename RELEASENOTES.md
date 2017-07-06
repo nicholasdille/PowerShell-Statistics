@@ -1,4 +1,4 @@
-# 1.1.135
+# 1.1.136
 
 - Added behaviour to skip build steps
 - Relying on the module CICD
