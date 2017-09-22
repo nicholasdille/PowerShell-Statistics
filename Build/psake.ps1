@@ -100,7 +100,10 @@ Task Test -Depends Init,Analysis  {
         #message = $env:APPVEYOR_REPO_COMMIT_MESSAGE
         branch = $env:APPVEYOR_REPO_BRANCH
     }
-    Publish-CoverageReport -CoverageReport $CoverageReport
+    $result = Publish-CoverageReport -CoverageReport $CoverageReport | ConvertFrom-Json
+    if (-Not $result.IsCompleted) {
+        Write-Error "Failed to upload coverage report to Coveralls.io (see job at $($result.Result.url))"
+    }
 
     if ($TestResults.FailedCount -gt 0) {
         Write-Error "Failed '$($TestResults.FailedCount)' tests. Build failed!"
