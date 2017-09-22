@@ -4,6 +4,9 @@ skip_tags: true
 environment:
   StatementCoverageThreshold: 100
   FunctionCoverageThreshold: 100
+  SkipUnitTests: false
+  SkipDocumentation: false
+  SkipScriptAnalysis: false
   NuGetApiKey:
     secure: EaMePsm8eU/bUd1Ej83dTOAaGja/ht/3IrKC84nbZ9+dQbjeDfbTHk7nM+wp9DgE
   GitHubToken:
