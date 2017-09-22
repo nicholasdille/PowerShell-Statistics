@@ -86,9 +86,13 @@ Task Test -Depends Init,Analysis  {
     "Function coverage: $($CodeCoverage.Function.Analyzed) analyzed, $($CodeCoverage.Function.Executed) executed, $($CodeCoverage.Function.Missed) missed, $($CodeCoverage.Function.Coverage)%."
 
     $CoverageReport = New-CoverageReportFromPester -CodeCoverage $TestResults.CodeCoverage -Path $env:BHProjectPath
+    '1'
     $CoverageReport.repo_token = $env:CoverallsToken
+    '2'
     $CoverageReport.service_name = 'AppVeyor'
+    '3'
     $CoverageReport.service_job_id = $env:APPVEYOR_JOB_ID
+    '4'
     $CoverageReport.git = @{
         head = @{
             id = $env:APPVEYOR_REPO_COMMIT
@@ -100,7 +104,9 @@ Task Test -Depends Init,Analysis  {
         #message = $env:APPVEYOR_REPO_COMMIT_MESSAGE
         branch = $env:APPVEYOR_REPO_BRANCH
     }
+    '5'
     $result = Publish-CoverageReport -CoverageReport $CoverageReport | ConvertFrom-Json
+    '6'
     if (-Not $result.IsCompleted) {
         Write-Error "Failed to upload coverage report to Coveralls.io (see job at $($result.Result.url))"
     }
