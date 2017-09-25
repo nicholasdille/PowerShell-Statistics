@@ -40,7 +40,7 @@ Task Analysis -Depends Init {
     $Files = Get-ChildItem -Path "$env:BHModulePath\*.ps1" -File
     $results = $Files | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ -Severity Warning }
     if ($results) {
-        $results
+        $results | Select-Object -Property ScriptName,Line,RuleName,Severity,Message
         Write-Error 'Failed script analysis. Build failed.'
     }
     $results = $Files | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ -SuppressedOnly }
@@ -86,7 +86,7 @@ Task Test -Depends Init,Analysis  {
     "Function coverage: $($CodeCoverage.Function.Analyzed) analyzed, $($CodeCoverage.Function.Executed) executed, $($CodeCoverage.Function.Missed) missed, $($CodeCoverage.Function.Coverage)%."
 
     if ($env:CoverallsToken) {
-        $CoverageReport = New-CoverageReportFromPester -CodeCoverage $TestResults.CodeCoverage -Path $env:BHProjectPath
+        $CoverageReport = CICD\New-CoverageReportFromPester -CodeCoverage $TestResults.CodeCoverage -Path $env:BHProjectPath
         $CoverageReport.repo_token = $env:CoverallsToken
         $CoverageReport.service_name = 'AppVeyor'
         $CoverageReport.service_job_id = $env:APPVEYOR_JOB_ID
@@ -101,7 +101,7 @@ Task Test -Depends Init,Analysis  {
             #message = $env:APPVEYOR_REPO_COMMIT_MESSAGE
             branch = $env:APPVEYOR_REPO_BRANCH
         }
-        $result = Publish-CoverageReport -CoverageReport $CoverageReport | ConvertFrom-Json
+        $result = Publish-CoverageReport -CoverageReport $CoverageReport
         if (-Not $result.IsCompleted) {
             Write-Error "Failed to upload coverage report to Coveralls.io (see job at $($result.Result.url))"
         }
