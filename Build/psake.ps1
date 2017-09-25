@@ -45,7 +45,7 @@ Task Analysis -Depends Init {
     }
     $results = $Files | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ -SuppressedOnly }
     if ($results) {
-        $results
+        $results | Select-Object -Property ScriptName,Line,RuleName,Severity,Message,Justification
         Write-Warning 'Some issues are suppressed from script analysis.'
     }
 
