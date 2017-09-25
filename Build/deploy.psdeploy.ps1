@@ -86,11 +86,11 @@ if (
 
     "Creating release in GitHub repository" |
         Write-Host
-    $GitHubReleaseId = New-GitHubRelease -Owner $env:GitHubOwner -Repository $env:GitHubRepo -Token $env:GitHubToken -Name $env:ModuleVersion -Branch $env:BHBranchName -Body $ReleaseNotes
+    $GitHubReleaseId = CICD\New-GitHubRelease -Owner $env:GitHubOwner -Repository $env:GitHubRepo -Token $env:GitHubToken -Name $env:ModuleVersion -Branch $env:BHBranchName -Body $ReleaseNotes
 
     "Uploading asset to GitHub release" |
         Write-Host
-    $GitHubAssetId = New-GitHubReleaseAsset -Owner $env:GitHubOwner -Repository $env:GitHubRepo -Token $env:GitHubToken -Release $GitHubReleaseId -Path $AssetPath
+    $GitHubAssetId = CICD\New-GitHubReleaseAsset -Owner $env:GitHubOwner -Repository $env:GitHubRepo -Token $env:GitHubToken -Release $GitHubReleaseId -Path $AssetPath
 }
 else
 {

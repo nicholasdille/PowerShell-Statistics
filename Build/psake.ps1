@@ -37,13 +37,13 @@ Task Analysis -Depends Init {
         return
     }
 
-    $Files = Get-ChildItem -Path "$env:BHModulePath\*.ps1" -File
-    $results = $Files | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ -Severity Warning }
+    $results = Invoke-ScriptAnalyzer -Path $env:BHModulePath -Severity Error,Warning -Recurse
     if ($results) {
         $results | Select-Object -Property ScriptName,Line,RuleName,Severity,Message
         Write-Error 'Failed script analysis. Build failed.'
     }
-    $results = $Files | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ -SuppressedOnly }
+
+    $results = Invoke-ScriptAnalyzer -Path $env:BHModulePath -SuppressedOnly -Recurse
     if ($results) {
         $results | Select-Object -Property ScriptName,Line,RuleName,Severity,Message,Justification
         Write-Warning 'Some issues are suppressed from script analysis.'
