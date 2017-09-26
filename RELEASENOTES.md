@@ -1,3 +1,8 @@
+# 1.1.148
+
+- Fixed upload to Coveralls
+- Improved quality by honouring findings of script analyzer
+
 # 1.1.136
 
 - Added behaviour to skip build steps
