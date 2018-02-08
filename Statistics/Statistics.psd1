@@ -1,6 +1,6 @@
 @{
     RootModule = 'Statistics.psm1'
-    ModuleVersion = '1.1'
+    ModuleVersion = '1.2.0'
     GUID = 'd5add589-39c5-4f5a-a200-ba8258085bc9'
     Author = 'Nicholas Dille'
     # CompanyName = ''
