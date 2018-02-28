@@ -14,7 +14,7 @@
         [Parameter()]
         [ValidateNotNullOrEmpty()]
         [int]
-        $Width = $( if ($Host.UI.RawUI.MaxWindowSize.Width) { $Host.UI.RawUI.MaxWindowSize.Width - 20 } else { 50 } )
+        $Width = $( if ($Host.UI.RawUI.MaxWindowSize.Width) { $Host.UI.RawUI.MaxWindowSize.Width - 30 } else { 50 } )
     )
 
     Begin {
@@ -46,7 +46,7 @@
     }
 
     End {
-        Write-Verbose ('[{0}] Adding bars' -f $MyInvocation.MyCommand)
+        Write-Verbose ('[{0}] Adding bars for width {1}' -f $MyInvocation.MyCommand, $Width)
 
         $Count = $Data | Microsoft.PowerShell.Utility\Measure-Object -Maximum -Property $Property | Select-Object -ExpandProperty Maximum
         Write-Debug ('[{0}] Maximum value is {1}. This value will be {2} characters long.' -f $MyInvocation.MyCommand, $Count, $Width)
@@ -56,7 +56,7 @@
             Write-Debug ('[{0}] Value of {1} will be displayed using {2} characters.' -f $MyInvocation.MyCommand, $_.Property, $RelativeCount)
 
             Write-Debug ('[{0}] Adding member to input object.' -f $MyInvocation.MyCommand)
-            $Item = $_ | Select-Object -Property Index,Count | Add-Member -MemberType NoteProperty -Name Bar -Value ('#' * $RelativeCount) -PassThru
+            $Item = $_ | Select-Object -Property Index,Count,$Property | Add-Member -MemberType NoteProperty -Name Bar -Value ('#' * $RelativeCount) -PassThru
 
             Write-Debug ('[{0}] Adding type name to output object.' -f $MyInvocation.MyCommand)
             $Item.PSTypeNames.Insert(0, 'HistogramBar')
