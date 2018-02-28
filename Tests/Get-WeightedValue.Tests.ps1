@@ -1,6 +1,12 @@
-Get-ChildItem -Path "$env:BHModulePath" -Filter '*.ps1' -File | ForEach-Object {
-    . "$($_.FullName)"
+#Get-ChildItem -Path "$env:BHModulePath" -Filter '*.ps1' -File | ForEach-Object {
+#    . "$($_.FullName)"
+#}
+
+if ($env:PSModulePath -notlike '*Statistics*') {
+    $env:PSModulePath = "$((Get-Item -Path "$PSScriptRoot\..").FullName);$env:PSModulePath"
 }
+
+Import-Module -Name Statistics -Force -ErrorAction 'Stop'
 
 Describe 'Get-WeightedValue' {
     It 'Throws on missing property' {
